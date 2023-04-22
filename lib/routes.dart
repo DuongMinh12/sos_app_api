@@ -11,6 +11,7 @@ final Map<String, WidgetBuilder> routes = {
   DrawerMenu.routeName: (context) => DrawerMenu(),
   ForgotPasswordPage.routeName: (context) => ForgotPasswordPage(),
   SignUpBottomSheetSceen.routeName: (context) => SignUpBottomSheetSceen(),
+  OtpScreen.routeName: (context) => OtpScreen(),
 
   // PaymentPage.routeName: (context) => PaymentPage(),
   // WithdrawMoneyPage.routeName: (context) => WithdrawMoneyPage(),
