@@ -56,10 +56,7 @@ class _MenuBodyState extends State<MenuBody> {
                 leading: Icon(Icons.logout),
                 title: Text('Log Out'),
                 onTap: (){
-                  FirebaseAuth.instance.signOut().then((value){
-                    print('signed out');
-                    Navigator.pushNamed(context, LogInPage.routeName);
-                  });
+                  Navigator.pushNamed(context, LogInPage.routeName);
                 },
               ),
             ],
