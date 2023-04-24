@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:password_strength_checker/password_strength_checker.dart';
 
 import '../../../constants/add_all.dart';
 
@@ -7,11 +8,11 @@ class BuildTextFormFile extends StatefulWidget {
   Widget? prefixIcon;
   //Widget?
   final TextEditingController controller;
-  BuildTextFormFile({super.key, required this.controller, this.prefixIcon, required this.title, required this.validator, required this.isPass});
+  BuildTextFormFile({super.key, required this.controller, this.prefixIcon, required this.title, required this.validator, required this.isPass, this.onchange,});
   final String title;
   String? Function(String?)? validator;
   final bool isPass;
-
+  void Function(String)? onchange;
 
   @override
   State<BuildTextFormFile> createState() => _BuildTextFormFileState();
@@ -25,6 +26,7 @@ class _BuildTextFormFileState extends State<BuildTextFormFile> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 45, vertical: 5),
       child: TextFormField(
+        onChanged: widget.onchange,
         obscureText: (widget.isPass == true)? obscureText : false,
         validator: widget.validator,
         controller: widget.controller,

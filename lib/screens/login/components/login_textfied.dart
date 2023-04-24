@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:warning_app/controllers/login_controller.dart';
+import 'package:warning_app/validator/validator.dart';
 
 import '../../../constants/add_all.dart';
 import '../../screens.dart';
@@ -44,7 +45,7 @@ class _LoginTextfieldState extends State<LoginTextfield> {
               color: kPrimaryColor,
             ),
             title: 'Email',
-            validator: validatorEmailLogin,
+            validator: (String? value) => ValidatorClass.validatorEmail(value),
           ),
           BuildTextFormFile(
             isPass: true,
@@ -55,7 +56,7 @@ class _LoginTextfieldState extends State<LoginTextfield> {
               color: kPrimaryColor,
             ),
             title: 'Password',
-            validator: validatorPassLogin,
+            validator: (String? value) => ValidatorClass.validatePassword(value),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 45),
@@ -112,23 +113,6 @@ class _LoginTextfieldState extends State<LoginTextfield> {
         ],
       ),
     );
-  }
-
-  @override
-  String? validatorEmailLogin(String? v) {
-    if (v!.isEmpty) {
-      return 'Bạn chưa nhập Email';
-    }else{
-      return null;
-    }
-  }
-
-  String? validatorPassLogin(String? v) {
-    if (v!.isEmpty) {
-      return 'Bạn chưa nhập Password';
-    }else{
-      return null;
-    }
   }
 }
 

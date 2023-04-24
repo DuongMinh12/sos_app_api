@@ -33,19 +33,22 @@ void LoginWithApi(BuildContext context, String email, String password) async{
       'email': email,
       'password': password,
     });
-    if(response.statusCode==200){
+    // print('touken login: ${response.data}');
+    // print(response.statusMessage);
+    // print(response.statusCode);
+    if(response.statusCode==201){
       Utils.toassMessage('Login successfully');
       // ignore: prefer_interpolation_to_compose_strings
-      // print(response.data);
+      print('touken login: ${response.data}');
       AppState.instance.settingBox.write(SettingType.tokenCode.toString(), response.data['TokenClient']);
       AppState.instance.settingBox.write(SettingType.emaillogin.toString(), email);
       AppState.instance.settingBox.write(SettingType.passwordlogin.toString(), password);
+      print('touken useremail: ${AppState.instance.settingBox.read(SettingType.emaillogin.toString())}');
       Future.delayed(Duration(seconds: 2),()=> Navigator.pushNamed(context, OtpScreen.routeName));
       print('touken login: ${AppState.instance.settingBox.read(SettingType.tokenCode.toString())}');
-    }else{
+    }
+    else{
       print('not 200 state');
-      print(response.statusCode);
-      print(response.statusMessage);
     }
   }catch(e){
     print('catch login error');
