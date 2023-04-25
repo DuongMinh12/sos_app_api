@@ -10,7 +10,7 @@ void main() async{
   await Firebase.initializeApp();
   await GetStorage.init();
   runApp(MaterialApp(
-    initialRoute: LogInPage.routeName,
+    initialRoute: DrawerMenu.routeName,
     routes: routes,
     debugShowCheckedModeBanner: false,
     //theme: ThemeData(),
