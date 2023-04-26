@@ -110,22 +110,23 @@ class _BodyHomePageState extends State<BodyHomePage> {
                     SizedBox(
                       height: 15,
                     ),
-                    Container(
-                      height: 450,
-                      child: GridView.builder(
-                          //primary: false,
-                          //physics: NeverScrollableScrollPhysics(),
-                          itemCount: datahome.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1 / 1.1),
-                          itemBuilder: (context, indext) {
-                            return SmartDevicesWidget(
-                              devicesname: datahome[indext][0],
-                              devicesicon: datahome[indext][1],
-                              power: datahome[indext][2],
-                              onChanged: (value) => powerSwithChange(value, indext),
-                            );
-                          }),
-                    )
+                   // GestureDetector(
+                   //   onTap: (){},
+                   //   child: Container(
+                   //     height: 70,
+                   //     width: 65,
+                   //     decoration: BoxDecoration(
+                   //       color: kBackground,
+                   //       borderRadius: BorderRadius.circular(10)
+                   //     ),
+                   //     child: Icon(CupertinoIcons.plus_circle, color: Colors.white, size: 40,),
+                   //   ),
+                   // )
+                    ElevatedButton(onPressed: (){}, child: Icon(CupertinoIcons.plus_circled, size: 40,),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(65, 70),
+                      backgroundColor: kBackground,
+                    ),)
                   ],
                 ),
               ),
@@ -135,67 +136,86 @@ class _BodyHomePageState extends State<BodyHomePage> {
       ),
     );
   }
-
-  void powerSwithChange(bool value, int index) async {
-    if (value == true) {
-      return showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Nhập Mật Khẩu'),
-              content: TextFormField(
-                decoration: InputDecoration(hintText: 'Nhập mật khẩu'),
-                controller: txt,
-              ),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      setState(() {
-                        value = false;
-                        datahome[index][2] = value;
-                      });
-                      Navigator.pop(context);
-                    },
-                    child: Text('Cancel')),
-                TextButton(
-                    onPressed: () {
-                      if (txt.text == 'admin') {
-                        Navigator.pop(context);
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Warning'),
-                                content: Text('Bạn có chắc rằng muốn tắt chương trình?'),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('cancel')),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                        setState(() {
-                                          value = true;
-                                          datahome[index][2] = value;
-                                        });
-                                      },
-                                      child: Text('ok'))
-                                ],
-                              );
-                            });
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Nhập lại mật khẩu')));
-                      }
-                    },
-                    child: Text('OK')),
-              ],
-            );
-          });
-    }
-    setState(() {
-      datahome[index][2] = value;
-    });
-  }
 }
+
+
+// Container(
+// height: 450,
+// child: GridView.builder(
+// //primary: false,
+// //physics: NeverScrollableScrollPhysics(),
+// itemCount: datahome.length,
+// gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1 / 1.1),
+// itemBuilder: (context, indext) {
+// return SmartDevicesWidget(
+// devicesname: datahome[indext][0],
+// devicesicon: datahome[indext][1],
+// power: datahome[indext][2],
+// onChanged: (value) => powerSwithChange(value, indext),
+// );
+// }),
+// )
+
+
+// void powerSwithChange(bool value, int index) async {
+//   if (value == true) {
+//     return showDialog(
+//         context: context,
+//         builder: (context) {
+//           return AlertDialog(
+//             title: Text('Nhập Mật Khẩu'),
+//             content: TextFormField(
+//               decoration: InputDecoration(hintText: 'Nhập mật khẩu'),
+//               controller: txt,
+//             ),
+//             actions: [
+//               TextButton(
+//                   onPressed: () {
+//                     setState(() {
+//                       value = false;
+//                       datahome[index][2] = value;
+//                     });
+//                     Navigator.pop(context);
+//                   },
+//                   child: Text('Cancel')),
+//               TextButton(
+//                   onPressed: () {
+//                     if (txt.text == 'admin') {
+//                       Navigator.pop(context);
+//                       showDialog(
+//                           context: context,
+//                           builder: (context) {
+//                             return AlertDialog(
+//                               title: Text('Warning'),
+//                               content: Text('Bạn có chắc rằng muốn tắt chương trình?'),
+//                               actions: [
+//                                 TextButton(
+//                                     onPressed: () {
+//                                       Navigator.pop(context);
+//                                     },
+//                                     child: Text('cancel')),
+//                                 TextButton(
+//                                     onPressed: () {
+//                                       Navigator.pop(context);
+//                                       setState(() {
+//                                         value = true;
+//                                         datahome[index][2] = value;
+//                                       });
+//                                     },
+//                                     child: Text('ok'))
+//                               ],
+//                             );
+//                           });
+//                     } else {
+//                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Nhập lại mật khẩu')));
+//                     }
+//                   },
+//                   child: Text('OK')),
+//             ],
+//           );
+//         });
+//   }
+//   setState(() {
+//     datahome[index][2] = value;
+//   });
+// }

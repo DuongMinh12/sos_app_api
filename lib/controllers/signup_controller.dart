@@ -56,21 +56,23 @@ void RegisterWithApi(BuildContext context, String name, String email, String pas
       'password': password,
       'name': name,
     });
-    if(response.statusCode==201){
-      Utils.toassMessage(response.data['msg']);
-      Future.delayed(Duration(seconds: 2),()=> Navigator.pushNamed(context, DrawerMenu.routeName));
+    if(response.data['statusCode'] ==200){
+      Utils.toassMessage(response.data['message']);
+      // Future.delayed(Duration(seconds: 2),()=> Navigator.pushNamed(context, DrawerMenu.routeName));
       print(response.data);
-    }else{
-      print('not 201 state');
-      print(response.statusCode);
-      print(response.statusMessage);
+      print('regesst succesws');
     }
+    else if (response.data['statusCode'] == 409){
+      print(response.data['message']);
+      Utils.toassMessage(response.data['message']);
+    }
+    // print(response);
     // Utils.toassMessage(response.data['msg']);
     // Future.delayed(Duration(seconds: 3),()=> Navigator.pushNamed(context, DrawerMenu.routeName));
   }catch(e){
     print('register error');
     print(e.toString());
-  };
+  }
 }
 
 

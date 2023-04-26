@@ -58,7 +58,9 @@
 // }
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
+import 'package:warning_app/screens/home/components/drawer_menu_main_page.dart';
 
 import '../constants/add_all.dart';
 
@@ -73,45 +75,6 @@ import '../constants/add_all.dart';
 
 class _TestPageState extends State<TestPage> {
    TextEditingController _email = TextEditingController();
-   // TextEditingController _pw = TextEditingController();
-   // TextEditingController _name = TextEditingController();
-   // @override
-   // void initState(){
-   //   super.initState();
-   //   iregister(_email.text, _pw.text, _name.text);
-   //   ilogin(_email.text, _pw.text);
-   // }
-   //
-   // void iregister(String email, String password, String name) async{
-   //
-   //   var dio = Dio();
-   //   try{
-   //     var response = await dio.post(urlapiregister, data: {
-   //       'email': email,
-   //       'password': password,
-   //       'name': name,
-   //     });
-   //     print(response.statusCode);
-   //     print(response.data.toString());
-   //   }catch(e){
-   //     print(e.toString());
-   //   };
-   // }
-
-   // void ilogin(String email, String password) async{
-   //   var urlapi='http://192.168.0.192:3000/api/login';
-   //   var dio = Dio();
-   //   try{
-   //     var response = await dio.post(urlapi, data: {
-   //       'email': email,
-   //       'password': password,
-   //     });
-   //     print(response.statusCode);
-   //     print(response.data.toString());
-   //   }catch(e){
-   //     print(e.toString());
-   //   };
-   // }
 
    @override
    Widget build(BuildContext context) {
@@ -124,7 +87,10 @@ class _TestPageState extends State<TestPage> {
          }
        },
        child: Scaffold(
-         appBar: AppBar(),
+         appBar: AppBar(
+           leading: IconButton(onPressed: (){
+             ZoomDrawer.of(context)!.open();}, icon: Icon(Icons.arrow_back_ios_new_rounded),),
+         ),
          body: Padding(
            padding: EdgeInsets.symmetric(horizontal: 30),
            child: Column(

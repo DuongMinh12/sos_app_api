@@ -16,6 +16,9 @@ class ValidatorClass {
     else if(!RegExp(email_regexp).hasMatch(value!)){
       return 'Kiểm tra lại email.';
     }
+    // else if(value.contains(' ')){
+    //   return 'Email không được có khoản trắng';
+    // }
     else {
       return null;
     }
@@ -31,9 +34,12 @@ class ValidatorClass {
 
   static validateUserName(String? value) {
     if (value!.isEmpty) {
-      return 'Bạn chưa nhập User name.';
+      return 'Bạn chưa nhập tên tài khoản.';
     } else if (value!.length < 6 || value!.length > MAX_LENGTH_CHARACTER) {
-      return 'User name không được ít hơn 6 hoặc vượt quá 50 ký tự.';
+      return 'Tên tài khoản không được ít hơn 6 hoặc vượt quá 50 ký tự.';
+    }
+    else if(value.contains(' ')){
+      return 'Tên tài khoản không được có khoản trắng';
     }
     // else if(RegExp(name_regexp).hasMatch(value)){
     //   return 'User name không được chứa ký tự đặc biệt.';

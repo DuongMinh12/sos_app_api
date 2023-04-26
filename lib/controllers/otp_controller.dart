@@ -8,10 +8,10 @@ import '../constants/local.dart';
 void OtpLogin(String touken, BuildContext context) async {
   var dio = Dio();
   try{
-    var response = await dio.post(urlapilogin, data: {
-      'email': AppState.instance.settingBox.read(SettingType.emaillogin.toString()),
-      'password': AppState.instance.settingBox.read(SettingType.passwordlogin.toString()),
-      'TokenClient' : touken,
+    var response = await dio.put(urlotp, data: {
+      // 'email': AppState.instance.settingBox.read(SettingType.emaillogin.toString()),
+      // 'password': AppState.instance.settingBox.read(SettingType.passwordlogin.toString()),
+      'otpCode' : touken,
     });
     // print(response.data);
     // print(response.statusCode);
