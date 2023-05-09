@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:warning_app/cubit/list_bank/list_bank_cubit.dart';
+import 'package:warning_app/screens/screens.dart';
 import '../../constants/add_all.dart';
-import '../../models/models.dart';
+import '../../cubit/account/customer_profile/user_pro5_cubit.dart';
 import '../../widgets/widgets.dart';
-import '../screens.dart';
-import 'components/drawer_menu_main_page.dart';
+import 'components/container_button.dart';
 
 class BodyHomePage extends StatefulWidget {
   const BodyHomePage({Key? key}) : super(key: key);
@@ -17,34 +19,31 @@ class BodyHomePage extends StatefulWidget {
 }
 
 class _BodyHomePageState extends State<BodyHomePage> {
-  String name ='Unknow';
+  // String name = 'Unknow';
 
-  Future getData() async{
-    await FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) async{
-      if(value.exists){
-        setState(() {
-          name = value['name'];
-        });
-        //cus.id = value.data()!['id'];
-      }
-    });
-  }
+  // Future getData() async {
+  //   await FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) async {
+  //     if (value.exists) {
+  //       setState(() {
+  //         name = value['name'];
+  //       });
+  //       //cus.id = value.data()!['id'];
+  //     }
+  //   });
+  // }
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    getData();
+    // getData();
+    BlocProvider.of<UserPro5Cubit>(context).getUserPro5();
   }
-  TextEditingController txt = TextEditingController();
 
-  List datahome = [
-    ['Khóa Nạp Tiền', moneyicon, false],
-    ['Khóa Rút Tiền', cashmoney, false],
-    ['Bảo Trì', maintenance, false],
-    ['Đóng Hệ Thống', systemicon, false],
-  ];
+  TextEditingController txt = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<ListBankCubit>(context).getListBank();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -86,11 +85,24 @@ class _BodyHomePageState extends State<BodyHomePage> {
                     SizedBox(
                       height: 10,
                     ),
+                    BlocBuilder<UserPro5Cubit, UserPro5State>(builder: (context, state){
+                      if(state is UserPro5Loading && state.isLoading==true){
+                        return Center(child: CircularProgressIndicator(),);
+                      }
+                      if(state is UserPro5Loaded){
+                        if(state.user!=null){
+                          return Text(
+                            'Welcome ${state.user.name} to,',
+                            style: txtwelcome,
+                          );
+                        }
+                        else{
+                          return Text('Welcome Unknow to', style: txtwelcome,);
+                        }
+                      }
+                      else {return Text("Some thing wrong");}
+                    }),
                     Text(
-                      'Welcome ${name} to,',
-                      style: txtwelcome,
-                    ),
-                    const Text(
                       'SOS App',
                       style: txthomestitle,
                     ),
@@ -110,23 +122,36 @@ class _BodyHomePageState extends State<BodyHomePage> {
                     SizedBox(
                       height: 15,
                     ),
-                   // GestureDetector(
-                   //   onTap: (){},
-                   //   child: Container(
-                   //     height: 70,
-                   //     width: 65,
-                   //     decoration: BoxDecoration(
-                   //       color: kBackground,
-                   //       borderRadius: BorderRadius.circular(10)
-                   //     ),
-                   //     child: Icon(CupertinoIcons.plus_circle, color: Colors.white, size: 40,),
-                   //   ),
-                   // )
-                    ElevatedButton(onPressed: (){}, child: Icon(CupertinoIcons.plus_circled, size: 40,),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(65, 70),
-                      backgroundColor: kBackground,
-                    ),)
+                    Container(
+                      height: 450,
+                      child: GridView(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                        ),
+                        children: [
+                          ContainerButton(title: 'Khóa nạp tiền', icon: moneyicon, ontap: () {Navigator.pushNamed(context, RechargeScreen.routeName);}),
+                          ContainerButton(title: 'Khóa rút tiền', icon: cashmoney, ontap: () {}),
+                          ContainerButton(
+                              title: 'Đóng hệ thống',
+                              icon: systemicon,
+                              ontap: () => showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return ShowAler(title: 'Đóng hệ thống',);
+                                  })),
+                          ContainerButton(
+                              title: 'Bảo trì',
+                              icon: maintenance,
+                              ontap: () => showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return ShowAler(title: 'Bảo trì',);
+                                  })),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -138,83 +163,71 @@ class _BodyHomePageState extends State<BodyHomePage> {
   }
 }
 
+// List datahome = [
+//   ['Khóa Nạp Tiền', moneyicon, false],
+//   ['Khóa Rút Tiền', cashmoney, false],
+//   ['Bảo Trì', maintenance, false],
+//   ['Đóng Hệ Thống', systemicon, false],
+// ];
 
-// Container(
-// height: 450,
-// child: GridView.builder(
-// //primary: false,
-// //physics: NeverScrollableScrollPhysics(),
-// itemCount: datahome.length,
-// gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 1 / 1.1),
-// itemBuilder: (context, indext) {
-// return SmartDevicesWidget(
-// devicesname: datahome[indext][0],
-// devicesicon: datahome[indext][1],
-// power: datahome[indext][2],
-// onChanged: (value) => powerSwithChange(value, indext),
-// );
-// }),
-// )
-
-
-// void powerSwithChange(bool value, int index) async {
-//   if (value == true) {
-//     return showDialog(
-//         context: context,
-//         builder: (context) {
-//           return AlertDialog(
-//             title: Text('Nhập Mật Khẩu'),
-//             content: TextFormField(
-//               decoration: InputDecoration(hintText: 'Nhập mật khẩu'),
-//               controller: txt,
-//             ),
-//             actions: [
-//               TextButton(
-//                   onPressed: () {
-//                     setState(() {
-//                       value = false;
-//                       datahome[index][2] = value;
-//                     });
-//                     Navigator.pop(context);
-//                   },
-//                   child: Text('Cancel')),
-//               TextButton(
-//                   onPressed: () {
-//                     if (txt.text == 'admin') {
-//                       Navigator.pop(context);
-//                       showDialog(
-//                           context: context,
-//                           builder: (context) {
-//                             return AlertDialog(
-//                               title: Text('Warning'),
-//                               content: Text('Bạn có chắc rằng muốn tắt chương trình?'),
-//                               actions: [
-//                                 TextButton(
-//                                     onPressed: () {
-//                                       Navigator.pop(context);
-//                                     },
-//                                     child: Text('cancel')),
-//                                 TextButton(
-//                                     onPressed: () {
-//                                       Navigator.pop(context);
-//                                       setState(() {
-//                                         value = true;
-//                                         datahome[index][2] = value;
-//                                       });
-//                                     },
-//                                     child: Text('ok'))
-//                               ],
-//                             );
-//                           });
-//                     } else {
-//                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Nhập lại mật khẩu')));
-//                     }
-//                   },
-//                   child: Text('OK')),
-//             ],
-//           );
-//         });
-//   }
+// void powerSwithChange( bool value, int index) async {
+//   // if (value == true) {
+//   //   return showDialog(
+//   //       context: context,
+//   //       builder: (context) {
+//   //         return AlertDialog(
+//   //           title: Text('Nhập Mật Khẩu'),
+//   //           content: TextFormField(
+//   //             decoration: InputDecoration(hintText: 'Nhập mật khẩu'),
+//   //             controller: txt,
+//   //           ),
+//   //           actions: [
+//   //             TextButton(
+//   //                 onPressed: () {
+//   //                   setState(() {
+//   //                     value = false;
+//   //                     datahome[index][2] = value;
+//   //                   });
+//   //                   Navigator.pop(context);
+//   //                 },
+//   //                 child: Text('Cancel')),
+//   //             TextButton(
+//   //                 onPressed: () {
+//   //                   if (txt.text == 'admin') {
+//   //                     Navigator.pop(context);
+//   //                     showDialog(
+//   //                         context: context,
+//   //                         builder: (context) {
+//   //                           return AlertDialog(
+//   //                             title: Text('Warning'),
+//   //                             content: Text('Bạn có chắc rằng muốn tắt chương trình?'),
+//   //                             actions: [
+//   //                               TextButton(
+//   //                                   onPressed: () {
+//   //                                     Navigator.pop(context);
+//   //                                   },
+//   //                                   child: Text('cancel')),
+//   //                               TextButton(
+//   //                                   onPressed: () {
+//   //                                     Navigator.pop(context);
+//   //                                     setState(() {
+//   //                                       value = true;
+//   //                                       datahome[index][2] = value;
+//   //                                     });
+//   //                                   },
+//   //                                   child: Text('ok'))
+//   //                             ],
+//   //                           );
+//   //                         });
+//   //                   } else {
+//   //                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Nhập lại mật khẩu')));
+//   //                   }
+//   //                 },
+//   //                 child: Text('OK')),
+//   //           ],
+//   //         );
+//   //       });
+//   // }
 //   setState(() {
 //     datahome[index][2] = value;
 //   });

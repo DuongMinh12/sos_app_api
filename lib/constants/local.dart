@@ -2,9 +2,11 @@ import '../app_state.dart';
 
 var userTouken = {AppState.instance.settingBox.read(SettingType.userTouken.toString())};
 
-var urlapiregister= local + 'user/register-acount';
-var urlapilogin= local + 'auth/login';
-var urlapiUser= local + 'login/${userTouken}';
-var urlotp = local + '/auth/otp-verify';
+var urlapiregister= local + '/api/user/register-acount';
+var urlapilogin= local + '/api/auth/login';
+var urlapiUser= local + '/api/login/${userTouken}';
+var urlotp = local + '/api/auth/otp-verify';
 
-var local = 'http://192.168.0.175:3000/api/';
+var urlListbank = local + '/api/bank/list';
+
+var local = 'http://192.168.0.191:3000';

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,7 @@ import 'package:warning_app/validator/validator.dart';
 
 import '../../../app_state.dart';
 import '../../../constants/add_all.dart';
+import '../../../cubit/account/login/login_cubit.dart';
 import '../../screens.dart';
 import 'components_login.dart';
 
@@ -22,19 +24,23 @@ class LoginTextfield extends StatefulWidget {
 
   @override
   State<LoginTextfield> createState() => _LoginTextfieldState();
+  var _emailController = TextEditingController();
+  var _passController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  LoginCubit loginwithCubit = LoginCubit();
 }
 
 class _LoginTextfieldState extends State<LoginTextfield> {
-  final _emailController = TextEditingController();
-  final _passController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   var _email = AppState.instance.settingBox.read(SettingType.emaillogin.toString());
   var _password = AppState.instance.settingBox.read(SettingType.passwordlogin.toString());
 
   @override
   void initState() {
     super.initState();
-    LoginWithApi(context, _emailController.text, _passController.text);
+    widget._emailController;
+    widget._passController;
+    widget.loginwithCubit = BlocProvider.of<LoginCubit>(context);
+    // LoginWithApi(context, _emailController.text, _passController.text);
     // BioAuth.authenticate();
   }
 
@@ -43,13 +49,13 @@ class _LoginTextfieldState extends State<LoginTextfield> {
     // print(AppState.instance.settingBox.read(SettingType.emaillogin.toString()));
     // Size size = MediaQuery.of(context).size;
     return Form(
-      key: _formKey,
+      key: widget._formKey,
       child: Column(
         children: [
           BuildTextFormFile(
             isPass: false,
             // obscureText: false,
-            controller: _emailController,
+            controller: widget._emailController,
             prefixIcon: Icon(
               Icons.email,
               color: kPrimaryColor,
@@ -60,7 +66,7 @@ class _LoginTextfieldState extends State<LoginTextfield> {
           BuildTextFormFile(
             isPass: true,
             // obscureText: true,
-            controller: _passController,
+            controller: widget._passController,
             prefixIcon: Icon(
               Icons.lock,
               color: kPrimaryColor,
@@ -74,23 +80,30 @@ class _LoginTextfieldState extends State<LoginTextfield> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        LoginWithApi(context, _emailController.text, _passController.text);
+                  child: BlocBuilder<LoginCubit, LoginState>(
+                    builder: (context, state){
+                      if(state is LoginLoading && state.isLoading){
+                        return Center(child: CircularProgressIndicator(),);
                       }
+                      return ElevatedButton(
+                        onPressed: () {
+                          if (widget._formKey.currentState!.validate()) {
+                            widget.loginwithCubit.postLoginCubit(context, widget._emailController.text, widget._passController.text);
+                          }
+                        },
+                        child: Text(
+                          'LOGIN',
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          //minimumSize: Size(size.width*0.8, 45),
+                          // padding: EdgeInsets.symmetric(horizontal: 10),
+                            backgroundColor: kPrimaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            )),
+                      );
                     },
-                    child: Text(
-                      'LOGIN',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        //minimumSize: Size(size.width*0.8, 45),
-                        // padding: EdgeInsets.symmetric(horizontal: 10),
-                        backgroundColor: kPrimaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        )),
                   ),
                 ),
                 SizedBox(

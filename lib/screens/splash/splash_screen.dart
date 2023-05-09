@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:warning_app/app_state.dart';
 import 'package:warning_app/constants/add_all.dart';
 import 'package:lottie/lottie.dart';
 import 'package:warning_app/screens/screens.dart';
@@ -28,7 +29,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 4), ()=> Navigator.pushNamed(context, LogInPage.routeName));
+    Future.delayed(Duration(seconds: 4), ()=> Navigator.pushNamed(context,AppState.instance.settingBox.read(SettingType.accessToken.toString())!=null? DrawerMenu.routeName: LogInPage.routeName));
   }
 
   @override

@@ -7,10 +7,15 @@ import 'package:warning_app/screens/screens.dart';
 import '../signUp/components/componnents_route.dart';
 import 'components/components_login.dart';
 
-class LogInPage extends StatelessWidget {
+class LogInPage extends StatefulWidget {
   LogInPage({Key? key}) : super(key: key);
   static String routeName = 'logInPage';
 
+  @override
+  State<LogInPage> createState() => _LogInPageState();
+}
+
+class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

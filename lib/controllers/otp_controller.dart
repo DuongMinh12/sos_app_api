@@ -18,8 +18,8 @@ void OtpLogin(String touken, BuildContext context) async {
 
     if(response.statusCode == 200){
       print(response.data);
-      AppState.instance.settingBox.write(SettingType.userTouken.toString(), response.data['userTokens']);
-      print('userTouken: ${AppState.instance.settingBox.read(SettingType.userTouken.toString())}');
+      // AppState.instance.settingBox.write(SettingType.userTouken.toString(), response.data['userTokens']);
+      // print('userTouken: ${AppState.instance.settingBox.read(SettingType.userTouken.toString())}');
       Future.delayed(Duration(seconds: 2),()=> Navigator.pushNamed(context, DrawerMenu.routeName));
       // Navigator.pushNamed(context, DrawerMenu.routeName);
     }else{

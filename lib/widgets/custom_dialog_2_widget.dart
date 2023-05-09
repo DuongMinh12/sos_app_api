@@ -11,7 +11,6 @@ class CustomAlertDialogChild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //bool testchange;
-    ChangeStateModel changeStateModel =  ChangeStateModel();
     return Dialog(
       backgroundColor: Colors.transparent,
       shape: RoundedRectangleBorder(
@@ -45,7 +44,6 @@ class CustomAlertDialogChild extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.pop(context);
-                            changeStateModel.changestatebutton = false;
                             //testchange = false;
                           },
                           child: Text('Cancel'),
@@ -59,7 +57,6 @@ class CustomAlertDialogChild extends StatelessWidget {
                           onPressed: (){
                             Navigator.pop(context);
                             //testchange = true;
-                            changeStateModel.changestatebutton = true;
                           },
                           child: Text('Ok'),
                           style: ElevatedButton.styleFrom(

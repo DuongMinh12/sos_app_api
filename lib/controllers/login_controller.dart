@@ -6,7 +6,6 @@ import 'package:warning_app/app_state.dart';
 import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/screens/home/components/drawer_menu_main_page.dart';
 import 'package:warning_app/screens/screens.dart';
-
 import '../constants/add_all.dart';
 
 void LogIn(BuildContext context, String email, String password){
@@ -31,9 +30,6 @@ void LoginWithApi(BuildContext context, String email, String password) async{
       'email': email,
       'password': password,
     });
-    // print('touken login: ${response.data}');
-    // print(response.statusMessage);
-    // print(response.statusCode);
     if(response.data != null){
       Utils.toassMessage('Login successfully');
       // ignore: prefer_interpolation_to_compose_strings
@@ -53,9 +49,4 @@ void LoginWithApi(BuildContext context, String email, String password) async{
     print(e.toString());
   };
 }
-
-// String decodeUserData(String code) {
-//   String normalizedSource = base64Url.normalize(code.split(".")[1]);
-//   return utf8.decode(base64Url.decode(normalizedSource));
-// }
 

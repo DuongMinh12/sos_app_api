@@ -3,19 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:warning_app/routes.dart';
 
+import 'cubit/wrapProvider.dart';
 import 'screens/screens.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
-  runApp(MaterialApp(
-    initialRoute: LogInPage.routeName,
+  runApp(WrapProvider(child:  MaterialApp(
+    initialRoute: SplashPage.routeName,
     routes: routes,
     debugShowCheckedModeBanner: false,
+    // home: SplashPage(),
     //theme: ThemeData(),
-  ));
+  )));
 }
+
 
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});

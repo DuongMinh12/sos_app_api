@@ -32,7 +32,6 @@ final String moneyicon = link + 'debt.png';
 final String maintenance = link + 'wrench.png';
 final String systemicon = link + 'system.png';
 final String cashmoney = link + 'cash-withdrawal.png';
-final String bgimage = link + 'background.png';
 final String clock = link + 'clock.png';
 final String light1 = link + 'light-1.png';
 final String light2 = link + 'light-2.png';

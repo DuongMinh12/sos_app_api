@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:warning_app/constants/add_all.dart';
 import 'package:warning_app/constants/utils.dart';
-import 'package:warning_app/repositories/customer/customer_repository.dart';
+import 'package:warning_app/repositories/customer/user_repository.dart';
 import 'package:warning_app/screens/screens.dart';
 
 class ProfileController extends GetxController{

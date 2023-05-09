@@ -10,41 +10,44 @@ import '../../../constants/add_all.dart';
 import '../../login/components/components_login.dart';
 
 class SignUpTextfield extends StatefulWidget {
-  const SignUpTextfield({
+  SignUpTextfield({
     super.key,
   });
 
   @override
   State<SignUpTextfield> createState() => _SignUpTextfieldState();
-}
 
-class _SignUpTextfieldState extends State<SignUpTextfield> {
-  // final controller = Get.put(SignUpController());
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   TextEditingController _usernameControllersg = TextEditingController();
   TextEditingController _emailControllersg = TextEditingController();
   TextEditingController _passControllersg = TextEditingController();
   final passNotifier = ValueNotifier<PasswordStrength?>(null);
+}
+
+class _SignUpTextfieldState extends State<SignUpTextfield> {
+  // final controller = Get.put(SignUpController());
   // TextEditingController _phoneControllersg =TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    RegisterWithApi(context, _usernameControllersg.text, _emailControllersg.text, _passControllersg.text);
-    passNotifier;
+    widget._usernameControllersg;
+    widget._emailControllersg;
+    widget._passControllersg;
+    widget.passNotifier;
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _key,
+      key:  widget._key,
       child: Column(
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BuildTextFormFile(
             isPass: false,
             // obscureText: false,
-            controller: _usernameControllersg,
+            controller:  widget._usernameControllersg,
             prefixIcon: Icon(
               Icons.person,
               color: kPrimaryColor,
@@ -55,7 +58,7 @@ class _SignUpTextfieldState extends State<SignUpTextfield> {
           BuildTextFormFile(
             isPass: false,
             // obscureText: false,
-            controller: _emailControllersg,
+            controller:  widget._emailControllersg,
             prefixIcon: Icon(
               Icons.email,
               color: kPrimaryColor,
@@ -65,11 +68,11 @@ class _SignUpTextfieldState extends State<SignUpTextfield> {
           ),
           BuildTextFormFile(
             onchange: (value) {
-              passNotifier.value = PasswordStrength.calculate(text: value);
+              widget.passNotifier.value = PasswordStrength.calculate(text: value);
             },
             isPass: true,
             // obscureText: true,
-            controller: _passControllersg,
+            controller:  widget._passControllersg,
             prefixIcon: Icon(
               Icons.lock,
               color: kPrimaryColor,
@@ -84,7 +87,7 @@ class _SignUpTextfieldState extends State<SignUpTextfield> {
                 width: 150,
                 // padding: EdgeInsets.symmetric(horizontal: 46, vertical: 5),
                 child: PasswordStrengthChecker(
-                  strength: passNotifier,
+                  strength:  widget.passNotifier,
                 ),
               ),
               SizedBox(
@@ -92,8 +95,8 @@ class _SignUpTextfieldState extends State<SignUpTextfield> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  if (_key.currentState!.validate()) {
-                    RegisterWithApi(context, _usernameControllersg.text.toString(), _emailControllersg.text.toString(), _passControllersg.text.toString());
+                  if ( widget._key.currentState!.validate()) {
+                    RegisterWithApi(context,  widget._usernameControllersg.text.toString(),  widget._emailControllersg.text.toString(),  widget._passControllersg.text.toString());
                   }
                 },
                 child: Text(
