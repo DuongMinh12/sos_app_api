@@ -22,8 +22,13 @@ class ListBankLoading extends ListBankState {
 class ListBankLoaded extends ListBankState {
  List<ListBankModel>  listBankModel;
   ListBankLoaded({required this.listBankModel});
-
-
   @override
   List<Object?> get props => [listBankModel];
 }
+
+// class AddListBankLoaded extends ListBankState {
+//   List<ListBankModel>  listBankModel;
+//   AddListBankLoaded({required this.listBankModel});
+//   @override
+//   List<Object?> get props => [listBankModel];
+// }

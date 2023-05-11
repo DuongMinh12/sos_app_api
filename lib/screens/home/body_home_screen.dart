@@ -92,7 +92,8 @@ class _BodyHomePageState extends State<BodyHomePage> {
                       if(state is UserPro5Loaded){
                         if(state.user!=null){
                           return Text(
-                            'Welcome ${state.user.name} to,',
+                            state.user.name!=null?
+                            'Welcome ${state.user.name} to,': 'Welcome Unknow to',
                             style: txtwelcome,
                           );
                         }
@@ -132,23 +133,19 @@ class _BodyHomePageState extends State<BodyHomePage> {
                         ),
                         children: [
                           ContainerButton(title: 'Khóa nạp tiền', icon: moneyicon, ontap: () {Navigator.pushNamed(context, RechargeScreen.routeName);}),
-                          ContainerButton(title: 'Khóa rút tiền', icon: cashmoney, ontap: () {}),
+                          ContainerButton(title: 'Khóa rút tiền', icon: cashmoney, ontap: () {Navigator.pushNamed(context, PaymentScreen.routeName);}),
                           ContainerButton(
                               title: 'Đóng hệ thống',
                               icon: systemicon,
-                              ontap: () => showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return ShowAler(title: 'Đóng hệ thống',);
-                                  })),
+                              ontap: () {
+                                Navigator.pushNamed(context, CloseSystem.routeName);
+                              }),
                           ContainerButton(
-                              title: 'Bảo trì',
+                              title: 'Bảo trì hệ thống',
                               icon: maintenance,
-                              ontap: () => showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return ShowAler(title: 'Bảo trì',);
-                                  })),
+                              ontap: (){
+                                Navigator.pushNamed(context, MaintenanceScreen.routeName);
+                              }),
                         ],
                       ),
                     )

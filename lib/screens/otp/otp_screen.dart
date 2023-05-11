@@ -3,7 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pinput/pinput.dart';
 import 'package:warning_app/constants/add_all.dart';
 
-import '../../app_state.dart';
+import '../../app_state/app_state.dart';
 import '../../controllers/otp_controller.dart';
 import 'components/pin_put_widget.dart';
 

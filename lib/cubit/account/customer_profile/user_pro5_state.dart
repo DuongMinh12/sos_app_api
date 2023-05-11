@@ -21,3 +21,32 @@ class UserPro5Loaded extends UserPro5State {
   @override
   List<Object?> get props => [user];
 }
+
+class UserPro5Error extends UserPro5State {
+  @override
+  List<Object?> get props => [];
+}
+
+///update user pro5
+class UserPro5Updating extends UserPro5State {
+  bool isLoading;
+  UserPro5Updating({this.isLoading = true});
+  @override
+  List<Object?> get props => [isLoading];
+}
+
+class UserPro5Updated extends UserPro5State {
+  @override
+  List<Object?> get props => [];
+}
+
+
+class UserPro5UpdateError  extends UserPro5State {
+  ErrorAccountModel errorAccountModel;
+  UserPro5UpdateError({required this.errorAccountModel});
+  @override
+  List<Object?> get props => [errorAccountModel];
+}
+
+
+

@@ -11,3 +11,6 @@ export 'home/components/drawer_menu_main_page.dart';
 export 'forgot_pw/forgot_pw_screen.dart';
 export 'otp/otp_screen.dart';
 export 'recharge/rechargerScreen.dart';
+export 'payment/paymen_screen.dart';
+export 'close_system/close_system_screen.dart';
+export 'maintenance/maintenance_screen.dart';
