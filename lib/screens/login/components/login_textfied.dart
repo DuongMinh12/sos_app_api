@@ -3,15 +3,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:warning_app/constants/utils.dart';
-import 'package:warning_app/controllers/login_controller.dart';
 import 'package:warning_app/services/local_auth/local_auth_service.dart';
 import 'package:warning_app/validator/validator.dart';
 
-import '../../../app_state.dart';
+import '../../../app_state/app_state.dart';
 import '../../../constants/add_all.dart';
 import '../../../cubit/account/login/login_cubit.dart';
 import '../../screens.dart';
@@ -31,8 +27,8 @@ class LoginTextfield extends StatefulWidget {
 }
 
 class _LoginTextfieldState extends State<LoginTextfield> {
-  var _email = AppState.instance.settingBox.read(SettingType.emaillogin.toString());
-  var _password = AppState.instance.settingBox.read(SettingType.passwordlogin.toString());
+
+
 
   @override
   void initState() {
@@ -46,6 +42,10 @@ class _LoginTextfieldState extends State<LoginTextfield> {
 
   @override
   Widget build(BuildContext context) {
+    var _email = AppState.instance.settingBox.read(SettingType.emaillogin.toString());
+    var _password = AppState.instance.settingBox.read(SettingType.passwordlogin.toString());
+    var biometric = AppState.instance.settingBox.read(SettingType.biometricState.toString());
+
     // print(AppState.instance.settingBox.read(SettingType.emaillogin.toString()));
     // Size size = MediaQuery.of(context).size;
     return Form(
@@ -76,16 +76,15 @@ class _LoginTextfieldState extends State<LoginTextfield> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 45),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: BlocBuilder<LoginCubit, LoginState>(
-                    builder: (context, state){
-                      if(state is LoginLoading && state.isLoading){
-                        return Center(child: CircularProgressIndicator(),);
-                      }
-                      return ElevatedButton(
+            child: BlocBuilder<LoginCubit, LoginState>(
+              builder: (context, state){
+                if(state is LoginLoading && state.isLoading){
+                  return Center(child: CircularProgressIndicator(),);
+                }
+                return Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
                         onPressed: () {
                           if (widget._formKey.currentState!.validate()) {
                             widget.loginwithCubit.postLoginCubit(context, widget._emailController.text, widget._passController.text);
@@ -102,39 +101,49 @@ class _LoginTextfieldState extends State<LoginTextfield> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             )),
-                      );
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                // (checkBio == true) ?
-                ElevatedButton(
-                  onPressed: () async {
-                    bool check = await BioAuth.authenticate(context);
-                    if(check == true){
-                      LoginWithApi(context, _email, _password);
-                    }
-                    else{
-                      Utils.toassMessage('Đăng nhập không thành công.');
-                    }
-                    // print(check);
-                  },
-                  child: (Platform.isAndroid)
-                      ? Icon(Icons.fingerprint)
-                      : SizedBox(
-                          child: Image.network(
-                            faceid,
-                            color: Colors.white,
-                          ),
-                          width: 25,
-                          height: 25,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    // (checkBio == true) ?
+                    ElevatedButton(
+                      onPressed: () async {
+                        if(biometric == true){
+                          bool check = await BioAuth.authenticate(context);
+                          if(check == true){
+                            widget.loginwithCubit.postRegisterLoginCubit(context, _email, _password);
+                          }
+                          else{
+                            Utils.toassMessage('Đăng nhập không thành công.');
+                          }
+                        }
+                        else{
+                          showDialog(context: context, builder: (context){
+                            return AlertDialog(
+                              title: Text('Thông báo'),
+                              content: Text('Thiết bị của bạn không hỗ trợ hoặc không được cấp quyền cho tính năng này, vui lòng kiểm tra lại thiết bị của bạn.'),
+                              actions: [TextButton(onPressed: (){Navigator.pop(context);}, child: Text('Cancel'))],
+                            );
+                          });
+                        }
+                        // print(check);
+                      },
+                      child: (Platform.isAndroid)
+                          ? Icon(Icons.fingerprint)
+                          : SizedBox(
+                        child: Image.network(
+                          faceid,
+                          color: Colors.white,
                         ),
-                  style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
-                )
-                // : SizedBox(),
-              ],
+                        width: 25,
+                        height: 25,
+                      ),
+                      style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
+                    )
+                  ],
+                );
+              },
             ),
           ),
           Padding(

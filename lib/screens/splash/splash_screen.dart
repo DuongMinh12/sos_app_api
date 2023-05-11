@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:warning_app/app_state.dart';
+import 'package:warning_app/app_state/app_state.dart';
 import 'package:warning_app/constants/add_all.dart';
 import 'package:lottie/lottie.dart';
 import 'package:warning_app/screens/screens.dart';

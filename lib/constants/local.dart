@@ -1,12 +1,13 @@
-import '../app_state.dart';
+import '../app_state/app_state.dart';
 
-var userTouken = {AppState.instance.settingBox.read(SettingType.userTouken.toString())};
+var id = AppState.instance.settingBox.read(SettingType.idUser.toString());
+var local = 'http://192.168.0.191:3000';
+
 
 var urlapiregister= local + '/api/user/register-acount';
 var urlapilogin= local + '/api/auth/login';
-var urlapiUser= local + '/api/login/${userTouken}';
+var urlapiUser= local + '/api/user/$id';
 var urlotp = local + '/api/auth/otp-verify';
-
+// var urlAddBank = local + '/api/userbank/add';
 var urlListbank = local + '/api/bank/list';
-
-var local = 'http://192.168.0.191:3000';
+var urlUpdateUserPro5 = local + '/api/user/update-avatar';

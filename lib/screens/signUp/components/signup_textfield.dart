@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:get/get.dart';
 import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:warning_app/controllers/signup_controller.dart';
+import 'package:warning_app/cubit/account/register/register_cubit.dart';
 import 'package:warning_app/validator/validator.dart';
 
 import '../../../constants/add_all.dart';
@@ -22,6 +24,7 @@ class SignUpTextfield extends StatefulWidget {
   TextEditingController _emailControllersg = TextEditingController();
   TextEditingController _passControllersg = TextEditingController();
   final passNotifier = ValueNotifier<PasswordStrength?>(null);
+  late RegisterCubit registerCubit;
 }
 
 class _SignUpTextfieldState extends State<SignUpTextfield> {
@@ -35,6 +38,7 @@ class _SignUpTextfieldState extends State<SignUpTextfield> {
     widget._emailControllersg;
     widget._passControllersg;
     widget.passNotifier;
+    widget.registerCubit = BlocProvider.of<RegisterCubit>(context);
   }
 
   @override
@@ -93,21 +97,25 @@ class _SignUpTextfieldState extends State<SignUpTextfield> {
               SizedBox(
                 height: 5,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  if ( widget._key.currentState!.validate()) {
-                    RegisterWithApi(context,  widget._usernameControllersg.text.toString(),  widget._emailControllersg.text.toString(),  widget._passControllersg.text.toString());
-                  }
-                },
-                child: Text(
-                  'SIGN UP',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(minimumSize: Size(320, 40), backgroundColor: kPrimaryColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
-              ),
+              BlocBuilder<RegisterCubit, RegisterState>(builder: (context, state){
+                if(state is RegisterLoading&& state.isLoading==true){
+                  return Center(child: CircularProgressIndicator(),);
+                }
+                  return ElevatedButton(
+                    onPressed: () {
+                      if ( widget._key.currentState!.validate()) {
+                        widget.registerCubit.postRegister(context,  widget._usernameControllersg.text.toString(),  widget._emailControllersg.text.toString(),  widget._passControllersg.text.toString());
+                      }
+                    },
+                    child: Text(
+                      'SIGN UP',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                    style: ElevatedButton.styleFrom(minimumSize: Size(320, 40), backgroundColor: kPrimaryColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
+                  );
+              }),
             ],
           )
-
         ],
       ),
     );

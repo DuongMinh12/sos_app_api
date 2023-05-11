@@ -59,5 +59,29 @@ class ValidatorClass {
     else if(RegExp(EMOJI_REGEXP).hasMatch(value)){
       return 'Password không được chứa ký tự đặt biệt.';
     }
+    else{
+      return null;
+    }
+  }
+
+  static validateFormName(String? value){
+    if(value!.isEmpty){
+      return 'Mục này không được để trống.';
+    }
+    else if(value.length>30){
+      return 'Chỉ nên nhập nhiều nhất 30 ký tự thôi.';
+    }
+    else{
+      return null;
+    }
+  }
+
+  static validateFormLink(String? value){
+    if(value!.isEmpty){
+      return 'Mục này không được để trống.';
+    }
+    else{
+      return null;
+    }
   }
 }

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:warning_app/screens/screens.dart';
 
-import '../app_state.dart';
+import '../app_state/app_state.dart';
 import '../constants/local.dart';
 
 void OtpLogin(String touken, BuildContext context) async {
