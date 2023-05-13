@@ -126,6 +126,7 @@ class _BodyHomePageState extends State<BodyHomePage> {
                     Container(
                       height: 450,
                       child: GridView(
+                        // itemCount: 4,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisSpacing: 10,
@@ -160,72 +161,10 @@ class _BodyHomePageState extends State<BodyHomePage> {
   }
 }
 
-// List datahome = [
-//   ['Khóa Nạp Tiền', moneyicon, false],
-//   ['Khóa Rút Tiền', cashmoney, false],
-//   ['Bảo Trì', maintenance, false],
-//   ['Đóng Hệ Thống', systemicon, false],
-// ];
 
-// void powerSwithChange( bool value, int index) async {
-//   // if (value == true) {
-//   //   return showDialog(
-//   //       context: context,
-//   //       builder: (context) {
-//   //         return AlertDialog(
-//   //           title: Text('Nhập Mật Khẩu'),
-//   //           content: TextFormField(
-//   //             decoration: InputDecoration(hintText: 'Nhập mật khẩu'),
-//   //             controller: txt,
-//   //           ),
-//   //           actions: [
-//   //             TextButton(
-//   //                 onPressed: () {
-//   //                   setState(() {
-//   //                     value = false;
-//   //                     datahome[index][2] = value;
-//   //                   });
-//   //                   Navigator.pop(context);
-//   //                 },
-//   //                 child: Text('Cancel')),
-//   //             TextButton(
-//   //                 onPressed: () {
-//   //                   if (txt.text == 'admin') {
-//   //                     Navigator.pop(context);
-//   //                     showDialog(
-//   //                         context: context,
-//   //                         builder: (context) {
-//   //                           return AlertDialog(
-//   //                             title: Text('Warning'),
-//   //                             content: Text('Bạn có chắc rằng muốn tắt chương trình?'),
-//   //                             actions: [
-//   //                               TextButton(
-//   //                                   onPressed: () {
-//   //                                     Navigator.pop(context);
-//   //                                   },
-//   //                                   child: Text('cancel')),
-//   //                               TextButton(
-//   //                                   onPressed: () {
-//   //                                     Navigator.pop(context);
-//   //                                     setState(() {
-//   //                                       value = true;
-//   //                                       datahome[index][2] = value;
-//   //                                     });
-//   //                                   },
-//   //                                   child: Text('ok'))
-//   //                             ],
-//   //                           );
-//   //                         });
-//   //                   } else {
-//   //                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Nhập lại mật khẩu')));
-//   //                   }
-//   //                 },
-//   //                 child: Text('OK')),
-//   //           ],
-//   //         );
-//   //       });
-//   // }
-//   setState(() {
-//     datahome[index][2] = value;
-//   });
-// }
+
+
+// GestureDetector(
+// onTap: (){
+// },
+// child: ContainerButton(title: 'Khóa nạp tiền', icon: moneyicon, ontap: () {Navigator.pushNamed(context, RechargeScreen.routeName);}))

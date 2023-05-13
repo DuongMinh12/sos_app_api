@@ -6,11 +6,12 @@ import '../../../constants/add_all.dart';
 
 
 
-Container buildProfile (String title, IconData icon, String initialValue){
+Container buildProfile (String title, IconData icon, TextEditingController controller, TextInputType textInputType){
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
     child: TextFormField(
-      initialValue: initialValue,
+      keyboardType: textInputType,
+      controller: controller,
       decoration: InputDecoration(
         prefixIcon: Icon(icon, color: kPrimaryColor,),
         label: Text(title),

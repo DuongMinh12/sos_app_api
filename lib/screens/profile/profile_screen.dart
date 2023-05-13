@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:warning_app/constants/add_all.dart';
+import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/models/models.dart';
 import '../../cubit/account/customer_profile/user_pro5_cubit.dart';
 import 'components/body_pro5_user.dart';
@@ -12,21 +16,30 @@ class ProfilePage extends StatefulWidget {
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController phone = TextEditingController();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  UserPro5Cubit userPro5Cubit = UserPro5Cubit();
+  XFile? _imagePicker;
 
   @override
   void initState() {
     super.initState();
     BlocProvider.of<UserPro5Cubit>(context).getUserPro5();
+    widget.name.text;
+    widget.email.text;
+    widget.phone.text;
+    // XFile? _imagePicker;
   }
 
   @override
   Widget build(BuildContext context) {
     // final controller = Get.put(ProfileController());
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
@@ -46,39 +59,80 @@ class _ProfilePageState extends State<ProfilePage> {
           style: txt20!.copyWith(fontWeight: FontWeight.w700),
         )),
       ),
-      body: BlocBuilder<UserPro5Cubit, UserPro5State>(
-        builder: (context, state) {
-          if (state is UserPro5Loading && state.isLoading == true) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state is UserPro5Loaded) {
-            if (state.user != null) {
-              return BodyPro5User(
-                avatar: (state.user.avatar!=null)? state.user.avatar.toString(): Customer.user.imageUrl!,
-                  username: (state.user.name != null) ? state.user.name.toString() : 'Unknow',
-                  email: (state.user.email != null) ? state.user.email.toString() : 'Unknow',
-                  phoneNumer: (state.user.phoneNumber!=null)? '${state.user.phoneNumber.hashCode}' : 'xxx-xxx-xxxx');
-            } else {
-              return BodyPro5User(
-                email: 'Unknow',
-                username: 'Unknow',
-                phoneNumer: 'xxx-xxx-xxxx',
-                avatar: Customer.user.imageUrl!,
-              );
-            }
-          } else {
-            return BodyPro5User(
-              email: 'Unknow',
-              username: 'Unknow',
-              phoneNumer: 'xxx-xxx-xxxx',
-              avatar: Customer.user.imageUrl!,
-            );
-          }
-        },
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SingleChildScrollView(
+          child: BlocBuilder<UserPro5Cubit, UserPro5State>(
+            builder: (context, state) {
+              if (state is UserPro5Loading && state.isLoading == true) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is UserPro5Loaded) {
+                String image = local +state.user.avatar.toString();
+                widget.name.text = state.user.name!= null? state.user.name.toString() : 'Unkown';
+                widget.email.text = state.user.email!= null? state.user.email.toString() : 'Unkown';
+                widget.phone.text = state.user.phoneNumber!=null? state.user.phoneNumber.toString() : 'xxx-xxx-xxxx';
+                if (state.user != null) {
+                  return BodyPro5User(
+                    avatar: (state.user.avatar!=null)? image : Customer.user.imageUrl!,
+                      name: (state.user.name != null) ? state.user.name.toString() : 'Unknow',
+                      email: (state.user.email != null) ? state.user.email.toString() : 'Unknow',
+                      controllerName: widget.name,
+                      controllerEmail: widget.email,
+                      controllerPhone: widget.phone,
+                      // phoneNumer: (state.user.phoneNumber!=null)? '${state.user.phoneNumber.hashCode}' : 'xxx-xxx-xxxx',
+                    updateButton: (){
+                      userPro5Cubit.updateUserPro5(context, widget.name.text, widget.email.text, widget.phone.text);
+                    },
+                    updateAvatarGallery: (){
+                      userPro5Cubit.updateAvatar(ImageSource.gallery);
+                    },);
+                } else {
+                  return BodyPro5User(
+                    email: 'Unknow',
+                    name: 'Unknow',
+                      controllerName: TextEditingController(text: 'Unknow'),
+                      controllerEmail: TextEditingController(text: 'Unknow'),
+                      controllerPhone: TextEditingController(text: 'xxx-xxx-xxxx'),
+                    avatar: Customer.user.imageUrl!,
+                      updateButton: (){
+                      Utils.toassMessage('Service error');
+                      },
+                    updateAvatarGallery: (){},
+                  );
+                }
+              } else {
+                return BodyPro5User(
+                  email: 'Unknow',
+                  name: 'Unknow',
+                    controllerName: TextEditingController(text: 'Unknow'),
+                    controllerEmail: TextEditingController(text: 'Unknow'),
+                    controllerPhone: TextEditingController(text: 'xxx-xxx-xxxx'),
+                  avatar: Customer.user.imageUrl!,
+                    updateButton: (){
+                      Utils.toassMessage('Service error');
+                    },
+                  updateAvatarGallery: (){},
+                );
+              }
+            },
+          ),
+        ),
       ),
     );
   }
+  // void takePhoto() async{
+  //   var pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   if(pickedFile==null){
+  //     return;
+  //   }
+  //
+  //   setState(() {
+  //     _imagePicker = pickedFile;
+  //     userPro5Cubit.updateAvatar(File(_imagePicker!.path));
+  //   });
+  // }
 }
 

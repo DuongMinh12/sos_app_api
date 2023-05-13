@@ -55,19 +55,19 @@ class LoginCubit extends Cubit<LoginState> {
         // print('Otpcode: ${reponse.data['data']['otpCode']}');
         AppState.instance.settingBox.write(SettingType.idUser.toString(), reponse.data['data']['id']);
         AppState.instance.settingBox.write(SettingType.accessToken.toString(), reponse.data['data']['accessToken']);
-        // var token = AppState.instance.settingBox.read(SettingType.accessToken.toString());
-        // print(token);
+        var id = AppState.instance.settingBox.read(SettingType.idUser.toString());
+        print(id);
         Navigator.pushNamed(context, DrawerMenu.routeName);
         // print('ok');
       }
       // emit(LoginLoading(isLoading: false));
       emit(LoginLoaded(listlogin: loginApiModel));
       if(reponse!=null && reponse!.data!=null && reponse!.data['statusCode'] != 200) {
-        Utils.toassMessage('Register Error: ${reponse!.data['message'].toString()}');
+        Utils.toassMessage('Login Error: ${reponse!.data['message'].toString()}');
       }
     }catch(e){
       // emit(LoginLoading(isLoading: false));
-      print(e.toString());
+      print('Login Error: $e');
     }
   }
 

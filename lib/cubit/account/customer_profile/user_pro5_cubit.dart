@@ -1,10 +1,17 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/models/models.dart';
+import 'package:warning_app/repositories/customer/update_avatar_responsitory.dart';
 import 'package:warning_app/repositories/customer/update_pro5_user_responsitory.dart';
 import 'package:warning_app/repositories/customer/user_repository.dart';
+import 'package:warning_app/screens/screens.dart';
 
 part 'user_pro5_state.dart';
 
@@ -12,6 +19,7 @@ class UserPro5Cubit extends Cubit<UserPro5State> {
   UserPro5Cubit() : super(UserPro5Initial());
   UserResponsitory userResponsitory = UserResponsitory();
   UpdatePro5UserResponsitory updatePro5UserResponsitory = UpdatePro5UserResponsitory();
+  UpdateAvatarRsponsitory updateAvatarRsponsitory = UpdateAvatarRsponsitory();
   User user = User();
 
   Future getUserPro5() async{
@@ -21,7 +29,7 @@ class UserPro5Cubit extends Cubit<UserPro5State> {
       emit(UserPro5Loading(isLoading: false));
       if(res!=null && res.data!=null || res!.data['statusCode'] == 200){
         user = User.fromJson(res.data['data']['result']);
-        // print(user.name);
+        // print(res.data);
       }
       emit(UserPro5Loaded(user: user));
       if(res!=null && res.data!=null && res!.data['statusCode'] != 200){
@@ -33,21 +41,41 @@ class UserPro5Cubit extends Cubit<UserPro5State> {
     }
   }
 
-  Future updateUserPro5(String username, String email, int phone) async{
+  Future updateUserPro5(BuildContext context, String username, String email, String phone) async{
     emit(UserPro5Updating(isLoading: true));
     var res = await updatePro5UserResponsitory.updateUserPro5(username, email, phone);
     emit(UserPro5Updating(isLoading: false));
     try{
       if(res!=null&& res.data!=null && res.data['statusCode'] == 200){
-
+        // Navigator.pushNamed(context, ProfilePage.routeName);
+        Navigator.pushNamed(context, DrawerMenu.routeName);
+        Utils.toassMessage(res.data['message']);
+        // Navigator.pop(context);
       }
       if(res!.data['statusCode'] != 200){
         Utils.toassMessage(res.data['message']);
+        print('vhbjkbk');
       }
-
     }catch(e){
       emit(UserPro5Updating(isLoading: false));
-      print(e);
+      print('updateUserPro5 Erorr: $e');
     }
+  }
+
+  Future updateAvatar(ImageSource source) async{
+    emit(UserUpdatingAvatar(isLoading: true));
+    var res = await updateAvatarRsponsitory.getAvatar(source);
+    emit(UserUpdatingAvatar(isLoading: false));
+    // try{
+    //   if(res!=null&& res.data!=null || res.data['statusCode'] == 200){
+    //     Utils.toassMessage(res.data['message']);
+    //   }
+    //   if(res!=null&& res.data!=null && res.data['statusCode'] != 200){
+    //     Utils.toassMessage(res.data['message']);
+    //   }
+    // }catch(e){
+    //   emit(UserUpdatingAvatar(isLoading: false));
+    //   print(e);
+    // }
   }
 }

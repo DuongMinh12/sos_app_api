@@ -48,5 +48,19 @@ class UserPro5UpdateError  extends UserPro5State {
   List<Object?> get props => [errorAccountModel];
 }
 
+/// update avatar
+
+class UserUpdatedAvatar extends UserPro5State {
+  @override
+  List<Object?> get props => [];
+}
+
+class UserUpdatingAvatar extends UserPro5State {
+  bool isLoading;
+  UserUpdatingAvatar({this.isLoading = true});
+  @override
+  List<Object?> get props => [isLoading];
+}
+
 
 

@@ -7,8 +7,8 @@ import 'package:warning_app/models/models.dart';
 import '../../app_state/app_state.dart';
 
 // class CustomerRepository {
-  // static CustomerRepository get instance => Get.find();
-  // final _firestore = FirebaseFirestore.instance;
+// static CustomerRepository get instance => Get.find();
+// final _firestore = FirebaseFirestore.instance;
 
 //   Future<Customer> getDataDetail(String email) async {
 //     /// sử dụng email để lấy data, khai báo String email trên funtion
@@ -20,15 +20,20 @@ import '../../app_state/app_state.dart';
 //   }
 // }
 
-class UserResponsitory{
-  Future<Response?> fetchUserPro5() async{
+class UserResponsitory {
+  Future<Response?> fetchUserPro5() async {
     var dio = Dio();
     var token = AppState.instance.settingBox.read(SettingType.accessToken.toString());
-    try{
-      dio.options.headers['Authorization'] = 'Bearer $token';
-      var response = await dio.get(urlapiUser);
+    try {
+      // dio.options.headers['Authorization'] = 'Bearer $token';
+      var response = await dio.get(urlapiUserPro5,
+          options: Options(headers: {
+            "Authorization": 'Bearer $token',
+            'content-Type': 'application/json'
+          })
+      );
       return response;
-    }catch(e){
+    } catch (e) {
       print(e);
     }
   }

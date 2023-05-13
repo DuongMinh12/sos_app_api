@@ -64,6 +64,7 @@ import 'package:password_strength_checker/password_strength_checker.dart';
 import 'package:warning_app/cubit/account/customer_profile/user_pro5_cubit.dart';
 import 'package:warning_app/cubit/account/register/register_cubit.dart';
 import 'package:warning_app/models/account/loginapi.dart';
+import 'package:warning_app/repositories/customer/update_avatar_responsitory.dart';
 import 'package:warning_app/screens/home/components/drawer_menu_main_page.dart';
 
 import '../app_state/app_state.dart';
@@ -82,17 +83,22 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   TextEditingController _name = TextEditingController();
   TextEditingController _email = TextEditingController();
-  TextEditingController _pw = TextEditingController();
+  TextEditingController _phone = TextEditingController();
+  UpdateAvatarRsponsitory updateAvatarRsponsitory = UpdateAvatarRsponsitory();
   // LoginApiModel loginApiModel = LoginApiModel();
 
-  late LoginCubit loginwithCubit;
+  // late LoginCubit loginwithCubit;
   // late RegisterCubit registerCubit;
+  UserPro5Cubit userPro5Cubit = UserPro5Cubit();
 
   @override
   void initState() {
     super.initState();
-    loginwithCubit = BlocProvider.of<LoginCubit>(context);
-    // BlocProvider.of<UserPro5Cubit>(context).getUserPro5();
+    _name.text;
+    _email.text;
+    _phone.text;
+    // loginwithCubit = BlocProvider.of<LoginCubit>(context);
+    BlocProvider.of<UserPro5Cubit>(context).getUserPro5();
     // registerCubit = BlocProvider.of<RegisterCubit>(context);
   }
 
@@ -107,64 +113,69 @@ class _TestPageState extends State<TestPage> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: _name,
-              decoration: InputDecoration(
-                hintText: 'nhập name',
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // SizedBox(child: BlocBuilder<UserPro5Cubit, UserPro5State>(
+              //   builder: (context, state){
+              //     if(state is UserPro5Loading && state.isLoading == true){
+              //       return Center(child: CircularProgressIndicator(),);
+              //     }
+              //     if(state is UserPro5Loaded){
+              //       _name.text =state.user.name.toString();
+              //       _email.text =state.user.email.toString();
+              //       _phone.text ='${state.user.phoneNumber}';
+              //       return Column(
+              //         children: [
+              //           TextFormField(
+              //             controller: _name,
+              //             decoration: InputDecoration(
+              //               hintText: 'nhập name',
+              //             ),
+              //           ),
+              //           TextFormField(
+              //             controller: _email,
+              //             decoration: InputDecoration(
+              //               hintText: 'nhập email',
+              //             ),
+              //           ),
+              //           TextFormField(
+              //             controller: _phone,
+              //             decoration: InputDecoration(
+              //               hintText: 'nhập pw',
+              //             ),
+              //           ),
+              //           ElevatedButton(onPressed: (){
+              //             // loginwithCubit.postLoginCubit(context, _email.text, _pw.text);
+              //             userPro5Cubit.updateUserPro5(context, _name.text, _email.text, _phone.text);
+              //             // print(_name.text);
+              //             // print(_email.text);
+              //             // print(_phone.text);
+              //           }, child: Text('register')),],
+              //       );
+              //     }
+              //     else{
+              //       return SizedBox();
+              //     }
+              //   },
+              // ),),
+              CircleAvatar(
+                radius: 40,
+                // maxRadius: 50,
+                backgroundColor: kBackground.withAlpha(100),
+                child: Icon(Icons.person),
               ),
-            ),
-            TextFormField(
-              controller: _email,
-              decoration: InputDecoration(
-                hintText: 'nhập email',
-              ),
-            ),
-            TextFormField(
-              controller: _pw,
-              decoration: InputDecoration(
-                hintText: 'nhập pw',
-              ),
-            ),
-            // SizedBox(child: BlocBuilder<RegisterCubit, RegisterState>(
-            //   builder: (context, state){
-            //     if(state is RegisterLoading && state.isLoading == true){
-            //       return Center(child: CircularProgressIndicator(),);
-            //     }
-            //     // if(state is RegisterLoaded){
-            //     //   if(state.user!=null){
-            //     //     return Column(children: [
-            //     //       Text(state.user.name.toString()),
-            //     //       ElevatedButton(onPressed: (){
-            //     //         updateData();
-            //     //       }, child: Text('update'))
-            //     //     ],);
-            //     //   }
-            //     //   else{
-            //     //     return Center(
-            //     //       child: Text('không thể nhận dâta'),
-            //     //     );
-            //     //   }
-            //     // }
-            //     return ElevatedButton(onPressed: (){
-            //       registerCubit.postRegister(context, _name.text, _email.text, _pw.text);
-            //     }, child: Text('register'));
-            //   },
-            // ),),
-
-            SizedBox(child: BlocBuilder<LoginCubit, LoginState>(
-              builder: (context, state){
-                if(state is LoginLoading && state.isLoading == true){
-                  return Center(child: CircularProgressIndicator(),);
-                }
-                return ElevatedButton(onPressed: (){
-                  loginwithCubit.postLoginCubit(context, _email.text, _pw.text);
-                }, child: Text('register'));
-              },
-            ),),
-          ],
+              ElevatedButton(onPressed: (){
+                // updateAvatarRsponsitory.getAvatarWithGallery();
+              }, child: Text('update avatar')),
+              ElevatedButton(onPressed: (){
+                // updateAvatarRsponsitory.getAvatarWithGallery();
+              }, child: Text('update avatar with camera'))
+            ],
+          ),
         ),
       ),
     );

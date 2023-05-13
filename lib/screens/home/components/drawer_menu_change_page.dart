@@ -41,12 +41,13 @@ class _MenuBodyState extends State<MenuBody> {
                   return Center(child: CircularProgressIndicator(),);
                 }
                 if(state is UserPro5Loaded){
+                  String image = local +state.user.avatar.toString();
                   if(state.user!= null){
                     return Column(
                       children: [
                         CircleAvatar(
                           radius: 35,
-                          backgroundImage: NetworkImage((state.user.avatar != null) ? state.user.avatar.toString(): Customer.user.imageUrl!),
+                          backgroundImage: NetworkImage((state.user.avatar != null) ? image : Customer.user.imageUrl!),
                           backgroundColor: Colors.white24,
                         ),
                         SizedBox(height: 10,),

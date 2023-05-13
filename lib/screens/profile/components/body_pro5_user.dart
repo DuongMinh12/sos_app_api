@@ -6,115 +6,152 @@ import 'build_container_profile.dart';
 
 class BodyPro5User extends StatelessWidget {
   BodyPro5User({
-    required this.username,
-    required this.email,
-    required this.phoneNumer,
+    required this.controllerName,
+    required this.controllerEmail,
+    required this.controllerPhone,
     required this.avatar,
+    required this.updateButton,
+    required this.email,
+    required this.name,
+    required this.updateAvatarGallery,
     super.key,
   });
-  String username;
-  String email;
-  String phoneNumer;
+  TextEditingController controllerName;
+  TextEditingController controllerEmail;
+  TextEditingController controllerPhone;
   String avatar;
+  VoidCallback updateButton;
+  String name;
+  String email;
+  VoidCallback updateAvatarGallery;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        alignment: Alignment.center,
-        child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-                padding: const EdgeInsets.only(top: 20.0, bottom: 15),
-                child: Stack(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      radius: 50,
-                      backgroundImage: NetworkImage(avatar),
-                    ),
-                    Positioned(
-                        right: 5,
-                        bottom: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            print('ok');
-                          },
-                          child: Container(
-                            height: 30,
-                            width: 30,
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.add_a_photo_outlined,
-                              color: Colors.white,
-                              size: 19,
-                            ),
-                            decoration: BoxDecoration(color: kPrimaryColor, borderRadius: BorderRadius.circular(99)),
-                          ),
-                        )),
-                  ],
-                )),
-            Text(
-              username,
-              style: txt18!.copyWith(fontWeight: FontWeight.w700),
-            ),
-            SizedBox(
-              height: 3,
-            ),
-            Text(
-              email,
-              style: txt16!.copyWith(fontWeight: FontWeight.normal),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            buildProfile('User Name', Icons.person, username),
-            buildProfile('Email', Icons.mail_outline, email),
-            buildProfile('Phone Number', Icons.phone, phoneNumer),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print('Save');
-              },
-              child: Text('Edit Profile'),
-              style: ElevatedButton.styleFrom(
-                  minimumSize: Size(345, 40),
-                  backgroundColor: kPrimaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  )),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print('Deleted');
-              },
-              child: Text('Delete Account'),
-              style: ElevatedButton.styleFrom(
-                  minimumSize: Size(345, 40),
-                  backgroundColor: Colors.blueAccent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(color: kBackground.withAlpha(200), borderRadius: BorderRadius.circular(12)),
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.end,
+    return Container(
+      alignment: Alignment.center,
+      child: Column(
+        //crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(top: 20.0, bottom: 15),
+              child: Stack(
                 children: [
-                  BiologistID(
-                    title: 'Thiết lập đăng nhập nhanh',
+                  CircleAvatar(
+                    backgroundColor: Colors.grey,
+                    radius: 50,
+                    backgroundImage: NetworkImage(avatar),
                   ),
+                  Positioned(
+                      right: 5,
+                      bottom: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+                              ),
+                              backgroundColor: Colors.white,
+                              context: context,
+                              builder: (context) {
+                                return Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                                  height: 200,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      listTitleChoosePiture('Pick from Gallery', Icons.image, updateAvatarGallery),
+                                      Divider(),
+                                      listTitleChoosePiture('Pick from Camera', Icons.camera, (){print('camera');}),
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.add_a_photo_outlined,
+                            color: Colors.white,
+                            size: 19,
+                          ),
+                          decoration: BoxDecoration(color: kPrimaryColor, borderRadius: BorderRadius.circular(99)),
+                        ),
+                      )),
                 ],
-              ),
+              )),
+          Text(
+            name,
+            style: txt18!.copyWith(fontWeight: FontWeight.w700),
+          ),
+          SizedBox(
+            height: 3,
+          ),
+          Text(
+            email,
+            style: txt16!.copyWith(fontWeight: FontWeight.normal),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          buildProfile('User Name', Icons.person, controllerName, TextInputType.text),
+          buildProfile('Email', Icons.mail_outline, controllerEmail, TextInputType.emailAddress),
+          buildProfile('Phone Number', Icons.phone, controllerPhone, TextInputType.phone),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: updateButton,
+            child: Text('Edit Profile'),
+            style: ElevatedButton.styleFrom(
+                minimumSize: Size(345, 40),
+                backgroundColor: kPrimaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                )),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              print('Deleted');
+            },
+            child: Text('Delete Account'),
+            style: ElevatedButton.styleFrom(
+                minimumSize: Size(345, 40),
+                backgroundColor: Colors.blueAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                )),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(color: kBackground.withAlpha(200), borderRadius: BorderRadius.circular(12)),
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                BiologistID(
+                  title: 'Thiết lập đăng nhập nhanh',
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+}
+
+Widget listTitleChoosePiture(String title, IconData icon, VoidCallback ontap){
+  return InkWell(
+    onTap: ontap,
+    child: ListTile(
+      leading: CircleAvatar(
+        backgroundColor: kBackground.withAlpha(100),
+        child: Icon(icon, color: Colors.grey.shade800,),
+      ),
+      title: Text(title, style: txt18!.copyWith(fontWeight: FontWeight.w500),),
+    ),
+  );
 }

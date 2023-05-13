@@ -37,7 +37,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     }catch(e){
       emit(RegisterLoading(isLoading: false));
       Utils.toassMessage('Register Error: $e');
-      print('Error: $e');
+      print('Error Register: $e');
     }
   }
 
