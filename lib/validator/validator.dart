@@ -68,8 +68,8 @@ class ValidatorClass {
     if(value!.isEmpty){
       return 'Mục này không được để trống.';
     }
-    else if(value.length>30){
-      return 'Chỉ nên nhập nhiều nhất 30 ký tự thôi.';
+    else if(value.length>20){
+      return 'Vui lòng không vượt quá 20 ký tự.';
     }
     else{
       return null;

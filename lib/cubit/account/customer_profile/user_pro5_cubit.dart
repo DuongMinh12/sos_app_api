@@ -62,20 +62,9 @@ class UserPro5Cubit extends Cubit<UserPro5State> {
     }
   }
 
-  Future updateAvatar(ImageSource source) async{
+  Future updateAvatar(BuildContext context ,ImageSource source) async{
     emit(UserUpdatingAvatar(isLoading: true));
-    var res = await updateAvatarRsponsitory.getAvatar(source);
+    var res = await updateAvatarRsponsitory.getAvatar(context, source);
     emit(UserUpdatingAvatar(isLoading: false));
-    // try{
-    //   if(res!=null&& res.data!=null || res.data['statusCode'] == 200){
-    //     Utils.toassMessage(res.data['message']);
-    //   }
-    //   if(res!=null&& res.data!=null && res.data['statusCode'] != 200){
-    //     Utils.toassMessage(res.data['message']);
-    //   }
-    // }catch(e){
-    //   emit(UserUpdatingAvatar(isLoading: false));
-    //   print(e);
-    // }
   }
 }

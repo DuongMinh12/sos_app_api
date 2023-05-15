@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/cubit/account/login/login_cubit.dart';
 import 'package:warning_app/repositories/customer/register_responsitory.dart';
+import 'package:warning_app/screens/screens.dart';
 import '../../../models/models.dart';
 part 'register_state.dart';
 
@@ -23,7 +24,8 @@ class RegisterCubit extends Cubit<RegisterState> {
     try{
       if(response!=null && response.data!=null || response!.data['statusCode'] == 200){
         registerdata = RegisterDataModel.fromJson(response.data['data']);
-       loginCubit.postRegisterLoginCubit(context, email, password);
+       // loginCubit.postRegisterLoginCubit(context, email, password);
+        Navigator.pushNamed(context, LogInPage.routeName);
         Utils.toassMessage(response.data['message']);
         emit(RegisterLoaded(registerDataModel: registerdata));
       }

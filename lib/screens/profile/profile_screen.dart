@@ -70,52 +70,57 @@ class _ProfilePageState extends State<ProfilePage> {
                 );
               }
               if (state is UserPro5Loaded) {
-                String image = local +state.user.avatar.toString();
-                widget.name.text = state.user.name!= null? state.user.name.toString() : 'Unkown';
-                widget.email.text = state.user.email!= null? state.user.email.toString() : 'Unkown';
-                widget.phone.text = state.user.phoneNumber!=null? state.user.phoneNumber.toString() : 'xxx-xxx-xxxx';
+                String image = local + state.user.avatar.toString();
+                widget.name.text = state.user.name != null ? state.user.name.toString() : 'Unkown';
+                widget.email.text = state.user.email != null ? state.user.email.toString() : 'Unkown';
+                widget.phone.text = state.user.phoneNumber != null ? state.user.phoneNumber.toString() : 'xxx-xxx-xxxx';
                 if (state.user != null) {
                   return BodyPro5User(
-                    avatar: (state.user.avatar!=null)? image : Customer.user.imageUrl!,
-                      name: (state.user.name != null) ? state.user.name.toString() : 'Unknow',
-                      email: (state.user.email != null) ? state.user.email.toString() : 'Unknow',
-                      controllerName: widget.name,
-                      controllerEmail: widget.email,
-                      controllerPhone: widget.phone,
-                      // phoneNumer: (state.user.phoneNumber!=null)? '${state.user.phoneNumber.hashCode}' : 'xxx-xxx-xxxx',
-                    updateButton: (){
+                    avatar: (state.user.avatar != null) ? image : Customer.user.imageUrl!,
+                    name: (state.user.name != null) ? state.user.name.toString() : 'Unknow',
+                    email: (state.user.email != null) ? state.user.email.toString() : 'Unknow',
+                    controllerName: widget.name,
+                    controllerEmail: widget.email,
+                    controllerPhone: widget.phone,
+                    // phoneNumer: (state.user.phoneNumber!=null)? '${state.user.phoneNumber.hashCode}' : 'xxx-xxx-xxxx',
+                    updateButton: () {
                       userPro5Cubit.updateUserPro5(context, widget.name.text, widget.email.text, widget.phone.text);
                     },
-                    updateAvatarGallery: (){
-                      userPro5Cubit.updateAvatar(ImageSource.gallery);
-                    },);
+                    updateAvatarGallery: () {
+                      userPro5Cubit.updateAvatar(context, ImageSource.gallery);
+                    },
+                    updateAvatarCamera: () {
+                      userPro5Cubit.updateAvatar(context, ImageSource.camera);
+                    },
+                  );
                 } else {
                   return BodyPro5User(
                     email: 'Unknow',
                     name: 'Unknow',
-                      controllerName: TextEditingController(text: 'Unknow'),
-                      controllerEmail: TextEditingController(text: 'Unknow'),
-                      controllerPhone: TextEditingController(text: 'xxx-xxx-xxxx'),
+                    controllerName: TextEditingController(text: 'Unknow'),
+                    controllerEmail: TextEditingController(text: 'Unknow'),
+                    controllerPhone: TextEditingController(text: 'xxx-xxx-xxxx'),
                     avatar: Customer.user.imageUrl!,
-                      updateButton: (){
+                    updateButton: () {
                       Utils.toassMessage('Service error');
-                      },
-                    updateAvatarGallery: (){},
+                    },
+                    updateAvatarGallery: () {},
+                    updateAvatarCamera: () {},
                   );
                 }
               } else {
                 return BodyPro5User(
-                  email: 'Unknow',
-                  name: 'Unknow',
+                    email: 'Unknow',
+                    name: 'Unknow',
                     controllerName: TextEditingController(text: 'Unknow'),
                     controllerEmail: TextEditingController(text: 'Unknow'),
                     controllerPhone: TextEditingController(text: 'xxx-xxx-xxxx'),
-                  avatar: Customer.user.imageUrl!,
-                    updateButton: (){
+                    avatar: Customer.user.imageUrl!,
+                    updateButton: () {
                       Utils.toassMessage('Service error');
                     },
-                  updateAvatarGallery: (){},
-                );
+                    updateAvatarGallery: () {},
+                    updateAvatarCamera: () {},);
               }
             },
           ),
@@ -135,4 +140,3 @@ class _ProfilePageState extends State<ProfilePage> {
   //   });
   // }
 }
-

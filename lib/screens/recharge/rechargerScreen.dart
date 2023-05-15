@@ -1,33 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:warning_app/cubit/service/add_service/add_service_cubit.dart';
 import '../../cubit/list_bank/list_bank_cubit.dart';
 import '../../widgets/widgets.dart';
 
-class RechargeScreen extends StatefulWidget {
+class RechargeScreen extends StatelessWidget {
   const RechargeScreen({Key? key}) : super(key: key);
   static String routeName = 'rechargeScreen';
 
   @override
-  State<RechargeScreen> createState() => _RechargeScreenState();
-}
-
-class _RechargeScreenState extends State<RechargeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<ListBankCubit>(context).getListBank();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BackGroundButtonWidget(
-      // ontap: (){
-      //   showDialog(context: context, builder: (context){
-      //     return buildAlertDialog();
-      //   });
-      // },
-      child: ContainerIconWidget(),
+      type: 'khoanap',
+      child: ContainerIconWidget(type: 'khoanap',),
       title: 'Khóa Nạp Tiền',
     );
   }
@@ -36,8 +22,6 @@ class _RechargeScreenState extends State<RechargeScreen> {
 // IconBank(
 // title: local + state.listBankModel[indext].icon.toString(),
 // );
-
-
 
 // BlocBuilder<ListBankCubit, ListBankState>(
 // builder: (context, state) {

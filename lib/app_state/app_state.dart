@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-enum SettingType { emaillogin, passwordlogin, idUser, accessToken, biometricState, bankid, }
+enum SettingType { emaillogin, passwordlogin, idUser, accessToken, biometricState, bankid, idService}
 
 class AppState extends GetxController {
   static final AppState instance = AppState();

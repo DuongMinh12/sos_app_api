@@ -7,6 +7,7 @@ class CloseSystem extends StatelessWidget {
 static String routeName ='closeSystem';
   @override
   Widget build(BuildContext context) {
-    return BackGroundButtonWidget(title: 'Đóng Hệ Thống', child: ContainerIconWidget(),);
+    return BackGroundButtonWidget(title: 'Đóng Hệ Thống', child: ContainerIconWidget(type: 'donghethong',),
+    type: 'donghethong',);
   }
 }

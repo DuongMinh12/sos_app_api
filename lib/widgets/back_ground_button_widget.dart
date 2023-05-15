@@ -5,11 +5,12 @@ import 'widgets.dart';
 import '../constants/add_all.dart';
 
 class BackGroundButtonWidget extends StatelessWidget {
-  BackGroundButtonWidget({ required this.child, required this.title,
+  BackGroundButtonWidget({ required this.child, required this.title, required this.type,
     super.key,
   });
   Widget child;
   String title;
+  String type;
   // VoidCallback ontap;
 
   @override
@@ -25,7 +26,7 @@ class BackGroundButtonWidget extends StatelessWidget {
         actions: [
           IconButton(onPressed: (){
             showDialog(context: context, builder: (context){
-              return buildAlertDialog(context);
+              return BuilAlerDialog(type: type,);
             });
           }, icon: Icon(CupertinoIcons.plus_app, color: Colors.black,))
         ],

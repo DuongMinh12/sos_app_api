@@ -14,6 +14,7 @@ class BodyPro5User extends StatelessWidget {
     required this.email,
     required this.name,
     required this.updateAvatarGallery,
+    required this.updateAvatarCamera,
     super.key,
   });
   TextEditingController controllerName;
@@ -24,6 +25,7 @@ class BodyPro5User extends StatelessWidget {
   String name;
   String email;
   VoidCallback updateAvatarGallery;
+  VoidCallback updateAvatarCamera;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class BodyPro5User extends StatelessWidget {
                                     children: [
                                       listTitleChoosePiture('Pick from Gallery', Icons.image, updateAvatarGallery),
                                       Divider(),
-                                      listTitleChoosePiture('Pick from Camera', Icons.camera, (){print('camera');}),
+                                      listTitleChoosePiture('Pick from Camera', Icons.camera, updateAvatarCamera),
                                     ],
                                   ),
                                 );
