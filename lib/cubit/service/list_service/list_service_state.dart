@@ -19,3 +19,19 @@ class ListServiceLoaded extends ListServiceState {
   @override
   List<Object?> get props => [listService];
 }
+
+///Change state
+
+// class StateServiceLoading extends ListServiceState {
+//   bool isLoading;
+//   StateServiceLoading({this.isLoading = true});
+//   @override
+//   List<Object?> get props => [isLoading];
+// }
+//
+// class StateServiceLoaded extends ListServiceState {
+//   StateServiceModel listState;
+//   StateServiceLoaded({required this.listState});
+//   @override
+//   List<Object?> get props => [listState];
+// }

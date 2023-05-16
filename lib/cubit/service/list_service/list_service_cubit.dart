@@ -3,6 +3,9 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/models/list_service_model.dart';
+import 'package:warning_app/models/state_service_model.dart';
+import 'package:warning_app/repositories/change_state_responsitory.dart';
+import 'package:warning_app/repositories/change_state_service_responsitory.dart';
 import 'package:warning_app/repositories/list_service_responsitory.dart';
 
 part 'list_service_state.dart';
@@ -11,8 +14,11 @@ class ListServiceCubit extends Cubit<ListServiceState> {
   ListServiceCubit() : super(ListServiceInitial());
   ListServiceResponsitory listServiceResponsitory =ListServiceResponsitory();
   ListServiceModel listServiceModel =ListServiceModel();
+  ChangeStateServiceResponsitory changeStateResponsitory = ChangeStateServiceResponsitory();
+  // StateServiceModel stateServiceModel = StateServiceModel();
 
   List<ListServiceModel>listService=[];
+  // List<StateServiceModel>listState=[];
 
   Future getListServiceCubit(String type) async{
     emit(ListServiceLoading(isLoading: true));
@@ -33,4 +39,30 @@ class ListServiceCubit extends Cubit<ListServiceState> {
       print('Get list service error: $e');
     }
   }
+
+
+  // Future changeStateService(String idService, String otp) async{
+  //   emit(StateServiceLoading(isLoading: true));
+  //   var response = await changeStateResponsitory.putChangeState(idService, otp);
+  //   emit(StateServiceLoading(isLoading: false));
+  //   try{
+  //     if(response!=null&&response.data!=null&&response.data['statusCode']==200){
+  //       stateServiceModel = StateServiceModel.fromJson(response.data['data']);
+  //       if(response.data['data']['link_on']!=null){
+  //         return true;
+  //       }
+  //       if(response.data['data']['link_off']!=null){
+  //         return false;
+  //       }
+  //       // listState = (response.data['data'] as List).map((e) => StateServiceModel.fromJson(e)).toList();
+  //     }
+  //     if(response!=null&&response.data!=null&&response.data['statusCode']!=200){
+  //       Utils.toassMessage(response.data['message']);
+  //     }
+  //     // emit(StateServiceLoaded(listState: stateServiceModel));
+  //   }catch(e){
+  //     emit(StateServiceLoading(isLoading: false));
+  //     print('Put State service cubit error: $e');
+  //   }
+  // }
 }

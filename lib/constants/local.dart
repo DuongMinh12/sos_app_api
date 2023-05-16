@@ -4,17 +4,21 @@ import '../app_state/app_state.dart';
 var local = 'http://192.168.0.191:3000';
 var localOnline = 'https://sos-ixmh.onrender.com';
 var token = AppState.instance.settingBox.read(SettingType.accessToken.toString());
+var inService = AppState.instance.settingBox.read(SettingType.idService.toString());
+//AppState.instance.settingBox.remove(SettingType.accessToken.toString());
+
 
 var urlapiregister= localOnline + '/api/user/register-acount';
 var urlapilogin= localOnline + '/api/auth/login';
 var urlapiUserPro5= localOnline + '/api/user/profile';
 var urlotp = localOnline + '/api/auth/otp-verify';
 // var urlAddBank = local + '/api/userbank/add';
-var urlListbank = local + '/api/bank/list';
+var urlListbank = localOnline + '/api/bank/list';
 var urlUpdateUserPro5 = localOnline + '/api/user/update-user-profile';
-var urlUpdateUserAvatar = 'http://192.168.0.191:3000/api/user/update-avatar';
+var urlUpdateUserAvatar = localOnline + '/api/user/update-avatar';
 var urlAddService = localOnline + "/api/services/add-service";
 var urlGetListService =  localOnline + '/api/services/get-services';
 var uploadImage = localOnline +'/api/services/update-avatar';
 var urlChangeState = localOnline + '/api/services/update-state';
 var urlOtpState = localOnline + '/api/auth/get-otp';
+var urlDeleAcc = localOnline + '/api/user/delete';

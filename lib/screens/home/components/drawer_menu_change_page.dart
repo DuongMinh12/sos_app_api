@@ -7,6 +7,7 @@ import 'package:warning_app/models/menu_item_model.dart';
 import 'package:warning_app/models/models.dart';
 import 'package:warning_app/screens/screens.dart';
 
+import '../../../app_state/app_state.dart';
 import '../../../cubit/account/customer_profile/user_pro5_cubit.dart';
 
 class MenuBody extends StatefulWidget {
@@ -103,6 +104,7 @@ class _MenuBodyState extends State<MenuBody> {
                 leading: Icon(Icons.logout),
                 title: Text('Log Out'),
                 onTap: (){
+                  AppState.instance.settingBox.remove(SettingType.accessToken.toString());
                   Navigator.pushNamed(context, LogInPage.routeName);
                 },
               ),

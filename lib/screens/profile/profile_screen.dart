@@ -92,6 +92,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     updateAvatarCamera: () {
                       userPro5Cubit.updateAvatar(context, ImageSource.camera);
                     },
+                    deleteAcc: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return buildAlertDialogDeleteAcc(state);
+                          });
+                      // userPro5Cubit.deleteAccount(context);
+                    },
                   );
                 } else {
                   return BodyPro5User(
@@ -106,26 +114,49 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     updateAvatarGallery: () {},
                     updateAvatarCamera: () {},
+                    deleteAcc: () {},
                   );
                 }
               } else {
                 return BodyPro5User(
-                    email: 'Unknow',
-                    name: 'Unknow',
-                    controllerName: TextEditingController(text: 'Unknow'),
-                    controllerEmail: TextEditingController(text: 'Unknow'),
-                    controllerPhone: TextEditingController(text: 'xxx-xxx-xxxx'),
-                    avatar: Customer.user.imageUrl!,
-                    updateButton: () {
-                      Utils.toassMessage('Service error');
-                    },
-                    updateAvatarGallery: () {},
-                    updateAvatarCamera: () {},);
+                  email: 'Unknow',
+                  name: 'Unknow',
+                  controllerName: TextEditingController(text: 'Unknow'),
+                  controllerEmail: TextEditingController(text: 'Unknow'),
+                  controllerPhone: TextEditingController(text: 'xxx-xxx-xxxx'),
+                  avatar: Customer.user.imageUrl!,
+                  updateButton: () {
+                    Utils.toassMessage('Service error');
+                  },
+                  updateAvatarGallery: () {},
+                  updateAvatarCamera: () {},
+                  deleteAcc: () {},
+                );
               }
             },
           ),
         ),
       ),
+    );
+  }
+
+  AlertDialog buildAlertDialogDeleteAcc(UserPro5Loaded state) {
+    UserPro5Cubit userPro5Cubit = UserPro5Cubit();
+    return AlertDialog(
+      title: Text('Cảnh báo.'),
+      contentPadding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 0),
+      content: Text('Bạn đang xóa tài khoản ${state.user.name}.'
+          ' Sau khi thực hiện toàn bộ dữ liệu của bạn sẽ bị xóa, bạn có chắc chắn muốn xóa tài khoản?'),
+      actions: [
+        TextButton(onPressed: (){
+          Navigator.pop(context);
+        }, child: Text('Cancel', style: txt15!.copyWith(color: Colors.blueAccent),)),
+        TextButton(onPressed: (){
+          userPro5Cubit.deleteAccount(context);
+        }, child: Text('Delete',style: txt15!.copyWith(color: Colors.blueAccent))),
+      ],
+      actionsPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+      actionsAlignment: MainAxisAlignment.spaceBetween,
     );
   }
   // void takePhoto() async{

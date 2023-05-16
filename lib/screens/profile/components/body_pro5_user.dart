@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:warning_app/cubit/account/customer_profile/user_pro5_cubit.dart';
 
 import '../../../constants/add_all.dart';
 import 'biologistID.dart';
@@ -15,6 +16,7 @@ class BodyPro5User extends StatelessWidget {
     required this.name,
     required this.updateAvatarGallery,
     required this.updateAvatarCamera,
+    required this.deleteAcc,
     super.key,
   });
   TextEditingController controllerName;
@@ -26,6 +28,7 @@ class BodyPro5User extends StatelessWidget {
   String email;
   VoidCallback updateAvatarGallery;
   VoidCallback updateAvatarCamera;
+  VoidCallback deleteAcc;
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +118,7 @@ class BodyPro5User extends StatelessWidget {
                 )),
           ),
           ElevatedButton(
-            onPressed: () {
-              print('Deleted');
-            },
+            onPressed: deleteAcc,
             child: Text('Delete Account'),
             style: ElevatedButton.styleFrom(
                 minimumSize: Size(345, 40),

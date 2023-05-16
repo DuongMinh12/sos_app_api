@@ -62,5 +62,19 @@ class UserUpdatingAvatar extends UserPro5State {
   List<Object?> get props => [isLoading];
 }
 
+/// dele account
+
+class UserPro5Deleting extends UserPro5State {
+  bool isLoading;
+  UserPro5Deleting({this.isLoading = true});
+  @override
+  List<Object?> get props => [isLoading];
+}
+
+class UserPro5Deleted extends UserPro5State {
+  @override
+  List<Object?> get props => [];
+}
+
 
 

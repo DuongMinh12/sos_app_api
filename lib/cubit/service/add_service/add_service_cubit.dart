@@ -12,9 +12,9 @@ class AddServiceCubit extends Cubit<AddServiceState> {
   AddServiceCubit() : super(AddServiceInitial());
   AddServiceResponsitory addServiceResponsitory =AddServiceResponsitory();
 
-  Future addServiceIcon(BuildContext context, String nameService, String linkOn, String linkOff, String type) async{
+  Future addServiceIcon(BuildContext context, String nameService, String linkOn, String linkOff, String type, var fileImage) async{
     emit(AddServiceLoading(isLoading: true));
-    var response = await addServiceResponsitory.postService(nameService, linkOn, linkOff, type);
+    var response = await addServiceResponsitory.postService(nameService, linkOn, linkOff, type, fileImage);
     emit(AddServiceLoading(isLoading: false));
     try{
       if(response!=null&&response.data!=null&& response.data['statusCode']==200){

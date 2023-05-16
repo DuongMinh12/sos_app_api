@@ -24,7 +24,7 @@ class SignUpTextfield extends StatefulWidget {
   TextEditingController _emailControllersg = TextEditingController();
   TextEditingController _passControllersg = TextEditingController();
   final passNotifier = ValueNotifier<PasswordStrength?>(null);
-  late RegisterCubit registerCubit;
+  RegisterCubit registerCubit = RegisterCubit();
 }
 
 class _SignUpTextfieldState extends State<SignUpTextfield> {
@@ -84,38 +84,38 @@ class _SignUpTextfieldState extends State<SignUpTextfield> {
             title: 'Password',
             validator: (String? value) => ValidatorClass.validatePassword(value),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 150,
-                // padding: EdgeInsets.symmetric(horizontal: 46, vertical: 5),
-                child: PasswordStrengthChecker(
-                  strength:  widget.passNotifier,
+          BlocBuilder<RegisterCubit, RegisterState>(builder: (context, state){
+            if(state is RegisterLoading&& state.isLoading==true){
+              return Center(child: CircularProgressIndicator(),);
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 150,
+                  // padding: EdgeInsets.symmetric(horizontal: 46, vertical: 5),
+                  child: PasswordStrengthChecker(
+                    strength:  widget.passNotifier,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              BlocBuilder<RegisterCubit, RegisterState>(builder: (context, state){
-                if(state is RegisterLoading&& state.isLoading==true){
-                  return Center(child: CircularProgressIndicator(),);
-                }
-                  return ElevatedButton(
-                    onPressed: () {
-                      if ( widget._key.currentState!.validate()) {
-                        widget.registerCubit.postRegister(context,  widget._usernameControllersg.text.toString(),  widget._emailControllersg.text.toString(),  widget._passControllersg.text.toString());
-                      }
-                    },
-                    child: Text(
-                      'SIGN UP',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(minimumSize: Size(320, 40), backgroundColor: kPrimaryColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
-                  );
-              }),
-            ],
-          )
+                SizedBox(
+                  height: 5,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if ( widget._key.currentState!.validate()) {
+                      widget.registerCubit.postRegister(context,  widget._usernameControllersg.text.toString(),  widget._emailControllersg.text.toString(),  widget._passControllersg.text.toString());
+                    }
+                  },
+                  child: Text(
+                    'SIGN UP',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(minimumSize: Size(320, 40), backgroundColor: kPrimaryColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
+                ),
+              ],
+            );
+          }),
         ],
       ),
     );

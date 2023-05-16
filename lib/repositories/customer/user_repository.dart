@@ -29,7 +29,7 @@ class UserResponsitory {
       var response = await dio.get(urlapiUserPro5,
           options: Options(headers: {
             "Authorization": 'Bearer $token',
-            'content-Type': 'application/json'
+            // 'content-Type': 'application/json'
           })
       );
       return response;

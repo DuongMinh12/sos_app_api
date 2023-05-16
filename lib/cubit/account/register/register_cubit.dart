@@ -22,12 +22,11 @@ class RegisterCubit extends Cubit<RegisterState> {
     var response = await registerResponsitory.postRegister(name, email, password);
     emit(RegisterLoading(isLoading: false));
     try{
-      if(response!=null && response.data!=null || response!.data['statusCode'] == 200){
+      if(response!=null && response.data!=null && response!.data['statusCode'] == 200){
         registerdata = RegisterDataModel.fromJson(response.data['data']);
        // loginCubit.postRegisterLoginCubit(context, email, password);
         Navigator.pushNamed(context, LogInPage.routeName);
         Utils.toassMessage(response.data['message']);
-        emit(RegisterLoaded(registerDataModel: registerdata));
       }
       if(response!=null && response!.data!=null && response!.data['statusCode'] != 200){
         Utils.toassMessage(response!.data['message']);
@@ -35,10 +34,10 @@ class RegisterCubit extends Cubit<RegisterState> {
         // print(response!.data['message']);
         // emit(RegisterLoaded(errorAccountModel: errorAccountModel));
       }
-
+      emit(RegisterLoaded(registerDataModel: registerdata));
     }catch(e){
       emit(RegisterLoading(isLoading: false));
-      Utils.toassMessage('Register Error: $e');
+      // Utils.toassMessage('Register Error: $e');
       print('Error Register: $e');
     }
   }

@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/models/models.dart';
+import 'package:warning_app/repositories/customer/delete_account_responsitory.dart';
 import 'package:warning_app/repositories/customer/update_avatar_responsitory.dart';
 import 'package:warning_app/repositories/customer/update_pro5_user_responsitory.dart';
 import 'package:warning_app/repositories/customer/user_repository.dart';
@@ -20,6 +18,7 @@ class UserPro5Cubit extends Cubit<UserPro5State> {
   UserResponsitory userResponsitory = UserResponsitory();
   UpdatePro5UserResponsitory updatePro5UserResponsitory = UpdatePro5UserResponsitory();
   UpdateAvatarRsponsitory updateAvatarRsponsitory = UpdateAvatarRsponsitory();
+  DeleteAccountResponsitory deleteAccountResponsitory = DeleteAccountResponsitory();
   User user = User();
 
   Future getUserPro5() async{
@@ -64,7 +63,30 @@ class UserPro5Cubit extends Cubit<UserPro5State> {
 
   Future updateAvatar(BuildContext context ,ImageSource source) async{
     emit(UserUpdatingAvatar(isLoading: true));
-    var res = await updateAvatarRsponsitory.getAvatar(context, source);
+    var response = await updateAvatarRsponsitory.getAvatar(context, source);
     emit(UserUpdatingAvatar(isLoading: false));
+    try{
+      if(response!=null && response.data!=null){
+        Utils.toassMessage(response.data['message']);
+      }
+    }catch(e){
+      emit(UserUpdatingAvatar(isLoading: false));
+      print('updateAcater error: $e');
+    }
+  }
+
+  Future deleteAccount(BuildContext context) async{
+    emit(UserPro5Deleting(isLoading: true));
+    var response = await deleteAccountResponsitory.deleteUser();
+    emit(UserPro5Deleting(isLoading: false));
+    try{
+      if(response!=null && response.data!=null){
+        Utils.toassMessage(response.data['message']);
+        Navigator.pushNamed(context, LogInPage.routeName);
+      }
+    }catch(e){
+      emit(UserPro5Deleting(isLoading: false));
+      print('deleteAccount error: $e');
+    }
   }
 }

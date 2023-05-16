@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:warning_app/app_state/app_state.dart';
+import 'package:warning_app/constants/add_all.dart';
 import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/screens/home/components/drawer_menu_main_page.dart';
 import 'package:warning_app/screens/otp/otp_screen.dart';
@@ -25,7 +26,7 @@ class LoginCubit extends Cubit<LoginState> {
         Utils.toassMessage('Log in success');
         loginApiModel = LoginApiModel.fromJson(reponse.data['data']);
         print('Otpcode: ${reponse.data['data']['otpCode']}');
-        AppState.instance.settingBox.write(SettingType.idUser.toString(), reponse.data['data']['id']);
+        // AppState.instance.settingBox.write(SettingType.idUser.toString(), reponse.data['data']['id']);
         AppState.instance.settingBox.write(SettingType.accessToken.toString(), reponse.data['data']['accessToken']);
         AppState.instance.settingBox.write(SettingType.emaillogin.toString(), email);
         AppState.instance.settingBox.write(SettingType.passwordlogin.toString(), password);
@@ -49,24 +50,27 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future postRegisterLoginCubit(BuildContext context, String email, String password,) async{
     try{
+      emit(LoginLoading(isLoading: true));
       final reponse = await loginResponse.getLogin(email, password);
-      if(reponse != null && reponse.data!=null || reponse!.data['statusCode'] == 200){
+      emit(LoginLoading(isLoading: false));
+      if(reponse != null && reponse.data!=null && reponse!.data['statusCode'] == 200){
         loginApiModel = LoginApiModel.fromJson(reponse.data['data']);
         // print('Otpcode: ${reponse.data['data']['otpCode']}');
-        AppState.instance.settingBox.write(SettingType.idUser.toString(), reponse.data['data']['id']);
+        // AppState.instance.settingBox.write(SettingType.idUser.toString(), reponse.data['data']['id']);
         AppState.instance.settingBox.write(SettingType.accessToken.toString(), reponse.data['data']['accessToken']);
-        var id = AppState.instance.settingBox.read(SettingType.idUser.toString());
-        print(id);
+        // var id = AppState.instance.settingBox.read(SettingType.idUser.toString());
+        // print(token);
+        Utils.toassMessage(reponse!.data['message']);
         Navigator.pushNamed(context, DrawerMenu.routeName);
         // print('ok');
       }
       // emit(LoginLoading(isLoading: false));
       emit(LoginLoaded(listlogin: loginApiModel));
       if(reponse!=null && reponse!.data!=null && reponse!.data['statusCode'] != 200) {
-        Utils.toassMessage('Login Error: ${reponse!.data['message'].toString()}');
+        Utils.toassMessage(reponse!.data['message']);
       }
     }catch(e){
-      // emit(LoginLoading(isLoading: false));
+      emit(LoginLoading(isLoading: false));
       print('Login Error: $e');
     }
   }

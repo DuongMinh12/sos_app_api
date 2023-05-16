@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warning_app/cubit/service/list_service/list_service_cubit.dart';
-
+import 'package:warning_app/repositories/change_state_service_responsitory.dart';
+import '../app_state/app_state.dart';
 import '../constants/add_all.dart';
+import '../repositories/otp_Cstate_responsitory.dart';
+import 'widgets.dart';
 
 class ContainerIconWidget extends StatefulWidget {
   ContainerIconWidget({
@@ -13,6 +16,11 @@ class ContainerIconWidget extends StatefulWidget {
   @override
   State<ContainerIconWidget> createState() => _ContainerIconWidgetState();
   String type;
+  ListServiceCubit listServiceCubit = ListServiceCubit();
+  TextEditingController otp = TextEditingController();
+  OtpChangeStateResponsitory otpChangeStateResponsitory = OtpChangeStateResponsitory();
+  bool? check = false;
+  ChangeStateServiceResponsitory changeStateServiceResponsitory =ChangeStateServiceResponsitory();
 }
 
 class _ContainerIconWidgetState extends State<ContainerIconWidget> {
@@ -20,10 +28,13 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
   void initState() {
     super.initState();
     BlocProvider.of<ListServiceCubit>(context).getListServiceCubit(widget.type);
+    widget.otp;
   }
 
   @override
   Widget build(BuildContext context) {
+    //print(widget.check);
+    var id;
     return Expanded(
       child: Container(
         ///Container bự bên ngoài
@@ -42,7 +53,7 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
             }
             if (state is ListServiceLoaded) {
               return GridView.builder(
-                  itemCount: 7,
+                  itemCount: state.listService.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
                     crossAxisSpacing: 5.0,
@@ -51,27 +62,40 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
                   ),
                   itemBuilder: (context, indext) {
                     return InkWell(
-                      onTap: (){
-                       showDialog(context: context, builder: (context){
-                         return buildAlertDialog(context);
-                       });
+                      onTap: () {
+                        AppState.instance.settingBox.write(SettingType.idService.toString(), state.listService[indext].id);
+                        // id = state.listService[indext].id;
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return BuildAlerdialogChangeState();
+                            });
                       },
                       child: Container(
                         padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            color: kPrimaryColor.withAlpha(50),
-                            borderRadius: BorderRadius.circular(8)
-                        ),
+                        decoration: BoxDecoration(color: state.listService[indext].state==1? kPrimaryColor.withAlpha(50): Colors.red,
+                            borderRadius: BorderRadius.circular(8)),
                         child: Column(
                           children: [
                             Expanded(
                               flex: 2,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
-                                child: Image.network(catNetword, fit: BoxFit.cover,),
+                                child: (state.listService[indext].avatar != null)
+                                    ? Image.network(
+                                        localOnline + state.listService[indext].avatar.toString(),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.network(
+                                        catNetword,
+                                        fit: BoxFit.cover,
+                                      ),
                               ),
                             ),
-                            Text('12345678910111213', overflow: TextOverflow.ellipsis,)
+                            Text(
+                              state.listService[indext].name.toString(),
+                              overflow: TextOverflow.ellipsis,
+                            )
                           ],
                         ),
                       ),
@@ -89,24 +113,6 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
   }
 }
 
-
-AlertDialog buildAlertDialog(BuildContext context) {
-  return AlertDialog(
-    title: Text('Cảnh báo.'),
-    content: Column(
-      children: [
-        Text('Bạn đang thay đổi trạng thái của ${''}, nếu bạn chắc chắn muốn thực hiện thao tác, vui lòng nhập otp bên dưới.'),
-        TextFormField()
-      ],
-    ),
-    actions: [
-      TextButton(onPressed: (){
-        Navigator.pop(context);
-      }, child: Text('Cancle')),
-      ElevatedButton(onPressed: (){}, child: Text('Submit code')),
-    ],
-  );
-}
 
 // Container(
 // padding: EdgeInsets.all(8),

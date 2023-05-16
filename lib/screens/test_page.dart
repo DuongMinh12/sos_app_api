@@ -173,7 +173,20 @@ class _TestPageState extends State<TestPage> {
               }, child: Text('update avatar')),
               ElevatedButton(onPressed: (){
                 // updateAvatarRsponsitory.getAvatarWithGallery();
-              }, child: Text('update avatar with camera'))
+              }, child: Text('update avatar with camera')),
+              IntrinsicHeight(
+                child: Row(
+                  children: [
+                   VerticalDivider(),
+                    Container(
+                      height: 70,
+                      width: 70,
+                      color: Colors.blue,
+                    )
+                  ],
+                ),
+              )
+
             ],
           ),
         ),
@@ -206,7 +219,7 @@ class _TestPageState extends State<TestPage> {
 void updateData() async {
   var dio = Dio();
   var token = AppState.instance.settingBox.read(SettingType.accessToken.toString());
-  var id = AppState.instance.settingBox.read(SettingType.idUser.toString());
+  // var id = AppState.instance.settingBox.read(SettingType.idUser.toString());
   // print(token);
   // print(id);
   try {

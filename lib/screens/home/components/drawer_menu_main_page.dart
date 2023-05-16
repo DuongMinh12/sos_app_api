@@ -51,8 +51,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
     if (currentItem == MenuItems.help) {
       return ContactPage();
     }
-    if (currentItem == MenuItems.test) {
-      return TestPage();
-    }
+    // if (currentItem == MenuItems.test) {
+    //   return TestPage();
+    // }
   }
 }

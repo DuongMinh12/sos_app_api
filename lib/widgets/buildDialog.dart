@@ -30,6 +30,7 @@ class BuilAlerDialog extends StatefulWidget {
 }
 
 class _BuilAlerDialogState extends State<BuilAlerDialog> {
+  var image;
   @override
   void initState() {
     super.initState();
@@ -74,11 +75,23 @@ class _BuilAlerDialogState extends State<BuilAlerDialog> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              listTitleChoosePiture('Pick from Gallery', Icons.image, (){
+                              listTitleChoosePiture('Pick from Gallery', Icons.image, () async{
+                                final pickerFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                setState(() {
+                                  image = pickerFile;
+                                });
+                                Navigator.pop(context);
+                                // image = takePhoto(ImageSource.gallery);
                                 // widget.avatarRsponsitory.getAvatar(context, ImageSource.gallery);
                               }),
                               Divider(),
-                              listTitleChoosePiture('Pick from Camera', Icons.camera, (){
+                              listTitleChoosePiture('Pick from Camera', Icons.camera, () async{
+                                final pickerFile = await ImagePicker().pickImage(source: ImageSource.camera);
+                                setState(() {
+                                  image = pickerFile;
+                                });
+                                Navigator.pop(context);
+                               // image = takePhoto(ImageSource.camera);
                                 // widget.avatarRsponsitory.getAvatar(context, ImageSource.camera);
                               }),
                             ],
@@ -109,7 +122,7 @@ class _BuilAlerDialogState extends State<BuilAlerDialog> {
             return TextButton(
               onPressed: (){
                 if(_key.currentState!.validate()){
-                  widget.addServiceCubit.addServiceIcon(context, widget.nameService.text, widget.linkOn.text, widget.linkOff.text, widget.type);
+                  widget.addServiceCubit.addServiceIcon(context, widget.nameService.text, widget.linkOn.text, widget.linkOff.text, widget.type, image);
                 }
               },
               child: Text('Submit', style: TextStyle(color: kPrimaryColor, fontSize: 16)),
@@ -146,3 +159,11 @@ FormInfor (String title, String? Function(String?)? validator, TextEditingContro
       ),
     ),);
 }
+
+// Future <XFile?> takePhoto (ImageSource source) async{
+//   final pickerFile = await ImagePicker().pickImage(source: source);
+//   if (pickerFile == null) {
+//     return null;
+//   }
+//   return pickerFile;
+// }
