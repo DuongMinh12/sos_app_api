@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:warning_app/cubit/service/add_service/add_service_cubit.dart';
 import 'package:warning_app/cubit/service/list_service/list_service_cubit.dart';
+import 'package:warning_app/repositories/add_service_responsitory.dart';
 import 'package:warning_app/repositories/change_state_service_responsitory.dart';
 import '../app_state/app_state.dart';
 import '../constants/add_all.dart';
 import '../repositories/otp_Cstate_responsitory.dart';
+import '../screens/profile/components/body_pro5_user.dart';
+import '../validator/validator.dart';
 import 'widgets.dart';
 
 class ContainerIconWidget extends StatefulWidget {
   ContainerIconWidget({
     required this.type,
+    required this.navigat,
     super.key,
   });
 
@@ -20,7 +25,9 @@ class ContainerIconWidget extends StatefulWidget {
   TextEditingController otp = TextEditingController();
   OtpChangeStateResponsitory otpChangeStateResponsitory = OtpChangeStateResponsitory();
   bool? check = false;
-  ChangeStateServiceResponsitory changeStateServiceResponsitory =ChangeStateServiceResponsitory();
+  ChangeStateServiceResponsitory changeStateServiceResponsitory = ChangeStateServiceResponsitory();
+  AddServiceResponsitory addServiceResponsitory = AddServiceResponsitory();
+  String navigat;
 }
 
 class _ContainerIconWidgetState extends State<ContainerIconWidget> {
@@ -34,7 +41,7 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
   @override
   Widget build(BuildContext context) {
     //print(widget.check);
-    var id;
+    // var id;
     return Expanded(
       child: Container(
         ///Container bự bên ngoài
@@ -45,6 +52,11 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
         decoration:
             BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [BoxShadow(color: kPrimaryColor.withAlpha(20), spreadRadius: 5, blurRadius: 7)]),
         child: BlocBuilder<ListServiceCubit, ListServiceState>(
+          // listener: (context, state){
+          //   if(state is AddServiceLoaded){
+          //    state is ListServiceLoading;
+          //   }
+          // },
           builder: (context, state) {
             if (state is ListServiceLoading && state.isLoading == true) {
               return Center(
@@ -52,6 +64,7 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
               );
             }
             if (state is ListServiceLoaded) {
+              // print('ok');
               return GridView.builder(
                   itemCount: state.listService.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -65,16 +78,16 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
                       onTap: () {
                         AppState.instance.settingBox.write(SettingType.idService.toString(), state.listService[indext].id);
                         // id = state.listService[indext].id;
-                        showDialog(
+                        showModalBottomSheet(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(30), topLeft: Radius.circular(30))),
                             context: context,
                             builder: (context) {
-                              return BuildAlerdialogChangeState();
+                              return buildContainerService(context, state.listService[indext].name.toString(), widget.navigat);
                             });
                       },
                       child: Container(
                         padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(color: state.listService[indext].state==1? kPrimaryColor.withAlpha(50): Colors.red,
-                            borderRadius: BorderRadius.circular(8)),
+                        decoration: BoxDecoration(color: state.listService[indext].state == 1 ? kPrimaryColor.withAlpha(50) : Colors.red, borderRadius: BorderRadius.circular(8)),
                         child: Column(
                           children: [
                             Expanded(
@@ -83,13 +96,13 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
                                 borderRadius: BorderRadius.circular(8),
                                 child: (state.listService[indext].avatar != null)
                                     ? Image.network(
-                                        localOnline + state.listService[indext].avatar.toString(),
-                                        fit: BoxFit.cover,
-                                      )
+                                  urllocalImage + state.listService[indext].avatar.toString(),
+                                  fit: BoxFit.cover,
+                                )
                                     : Image.network(
-                                        catNetword,
-                                        fit: BoxFit.cover,
-                                      ),
+                                  catNetword,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                             Text(
@@ -101,7 +114,8 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
                       ),
                     );
                   });
-            } else {
+            }
+             else {
               return Center(
                 child: Text("Trong đây chưa có gì hớt"),
               );
@@ -112,7 +126,6 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
     );
   }
 }
-
 
 // Container(
 // padding: EdgeInsets.all(8),

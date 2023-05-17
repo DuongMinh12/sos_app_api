@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:warning_app/constants/add_all.dart';
+import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/models/state_service_model.dart';
 
 class ChangeStateServiceResponsitory{
@@ -17,14 +18,15 @@ class ChangeStateServiceResponsitory{
           "Authorization": 'Bearer $token',
         }
       ));
-      // if(response.data['data']['link_on']!=null){
-      //   // print('on');
-      //   return true;
-      // }
-      // if(response.data['data']['link_off']!=null){
-      //   // print('off');
-      //   return false;
-      // }
+      if(response!= null && response.data!=null && response.data['statusCode'] == 200){
+       Utils.toassMessage(response.data['message']);
+      }
+      if(response!= null && response.data!=null && response.data['statusCode'] != 200){
+        Utils.toassMessage(response.data['message']);
+      }
+      if(response==null||response.data==null){
+        Utils.toassMessage("Have problem with your action.");
+      }
     }catch(e){
       print('Post change state error: $e');
     }

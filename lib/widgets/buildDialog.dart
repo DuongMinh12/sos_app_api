@@ -17,7 +17,7 @@ final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
 
 class BuilAlerDialog extends StatefulWidget {
-  BuilAlerDialog({Key? key,required this.type }) : super(key: key);
+  BuilAlerDialog({Key? key,required this.type, required this.routename }) : super(key: key);
 
   @override
   State<BuilAlerDialog> createState() => _BuilAlerDialogState();
@@ -27,6 +27,7 @@ class BuilAlerDialog extends StatefulWidget {
   TextEditingController linkOn = TextEditingController();
   TextEditingController linkOff = TextEditingController();
   UpdateAvatarRsponsitory avatarRsponsitory = UpdateAvatarRsponsitory();
+  String routename;
 }
 
 class _BuilAlerDialogState extends State<BuilAlerDialog> {
@@ -123,6 +124,7 @@ class _BuilAlerDialogState extends State<BuilAlerDialog> {
               onPressed: (){
                 if(_key.currentState!.validate()){
                   widget.addServiceCubit.addServiceIcon(context, widget.nameService.text, widget.linkOn.text, widget.linkOff.text, widget.type, image);
+                  Navigator.pushNamed(context, widget.routename);
                 }
               },
               child: Text('Submit', style: TextStyle(color: kPrimaryColor, fontSize: 16)),

@@ -12,8 +12,9 @@ class RechargeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackGroundButtonWidget(
+      routename: RechargeScreen.routeName,
       type: 'khoanap',
-      child: ContainerIconWidget(type: 'khoanap',),
+      child: ContainerIconWidget(type: 'khoanap', navigat: RechargeScreen.routeName,),
       title: 'Khóa Nạp Tiền',
     );
   }

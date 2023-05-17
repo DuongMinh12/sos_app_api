@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../app_state/app_state.dart';
+import '../cubit/service/list_service/list_service_cubit.dart';
 import '../repositories/change_state_service_responsitory.dart';
 import '../repositories/otp_Cstate_responsitory.dart';
 
 class BuildAlerdialogChangeState extends StatefulWidget {
-  BuildAlerdialogChangeState({Key? key}) : super(key: key);
+  BuildAlerdialogChangeState({Key? key, required this.serviceName}) : super(key: key);
 
   @override
   State<BuildAlerdialogChangeState> createState() => _BuildAlerdialogChangeStateState();
@@ -14,6 +15,7 @@ class BuildAlerdialogChangeState extends StatefulWidget {
   TextEditingController otp = TextEditingController();
   StateModel stateModel = StateModel();
   var idService = AppState.instance.settingBox.read(SettingType.idService.toString());
+  String serviceName;
 }
 
 class _BuildAlerdialogChangeStateState extends State<BuildAlerdialogChangeState> {
@@ -23,6 +25,7 @@ class _BuildAlerdialogChangeStateState extends State<BuildAlerdialogChangeState>
     super.initState();
     widget.otp;
   }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -31,12 +34,19 @@ class _BuildAlerdialogChangeStateState extends State<BuildAlerdialogChangeState>
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Bạn đang thay đổi trạng thái của ${''}, nếu bạn chắc chắn muốn thực hiện thao tác, vui lòng nhập otp bên dưới.'),
+          RichText(
+              textAlign: TextAlign.justify,
+              text: TextSpan(text: 'Bạn đang thay đổi trạng thái của ', style: TextStyle(color: Colors.black, fontSize: 15), children: [
+                TextSpan(text: widget.serviceName, style: TextStyle(color: Colors.blueAccent)),
+                TextSpan(text: '. Nếu bạn chắc chắn muốn thực hiện thao tác, vui lòng nhập otp bên dưới.')
+              ])),
+          // Text('Bạn đang thay đổi trạng thái của ${widget.serviceName}, nếu bạn chắc chắn muốn thực hiện thao tác, vui lòng nhập otp bên dưới.'),
           SizedBox(
             height: 10,
           ),
           TextFormField(
             controller: widget.otp,
+            keyboardType: TextInputType.number,
             decoration: InputDecoration(
                 hintText: 'Nhập otp.',
                 hintStyle: TextStyle(color: Colors.grey.shade400),
@@ -75,7 +85,7 @@ class _BuildAlerdialogChangeStateState extends State<BuildAlerdialogChangeState>
             },
             child: Text('Cancel')),
         ElevatedButton(
-            onPressed: () async{
+            onPressed: () async {
               await widget.changeStateResponsitory.putChangeState(widget.idService, widget.otp.text);
               Navigator.pop(context);
             }
@@ -88,8 +98,7 @@ class _BuildAlerdialogChangeStateState extends State<BuildAlerdialogChangeState>
   }
 }
 
-
-class StateModel{
+class StateModel {
   bool? icheck;
   StateModel({this.icheck});
 }

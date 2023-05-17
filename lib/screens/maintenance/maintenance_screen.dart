@@ -7,7 +7,8 @@ static String routeName = 'maintenanceScreen';
   @override
   Widget build(BuildContext context) {
     return BackGroundButtonWidget(
+      routename: MaintenanceScreen.routeName,
       type: 'baotri',
-        child: ContainerIconWidget(type: 'baotri',), title: 'Bảo Trì Hệ Thống');
+        child: ContainerIconWidget(type: 'baotri', navigat: MaintenanceScreen.routeName,), title: 'Bảo Trì Hệ Thống');
   }
 }

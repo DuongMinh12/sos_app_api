@@ -19,19 +19,6 @@ class BodyHomePage extends StatefulWidget {
 }
 
 class _BodyHomePageState extends State<BodyHomePage> {
-  // String name = 'Unknow';
-
-  // Future getData() async {
-  //   await FirebaseFirestore.instance.collection('User').doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) async {
-  //     if (value.exists) {
-  //       setState(() {
-  //         name = value['name'];
-  //       });
-  //       //cus.id = value.data()!['id'];
-  //     }
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();

@@ -9,9 +9,10 @@ class PaymentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackGroundButtonWidget(
+      routename: PaymentScreen.routeName,
       type: 'khoarut',
       title: 'Khóa Rút Tiền',
-      child: ContainerIconWidget(type: 'khoarut',),
+      child: ContainerIconWidget(type: 'khoarut', navigat: PaymentScreen.routeName,),
     );
   }
 }

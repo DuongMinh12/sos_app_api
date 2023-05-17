@@ -16,7 +16,7 @@ class AddServiceLoading extends AddServiceState {
 }
 
 class AddServiceLoaded extends AddServiceState {
-AddServiceDataModel addServiceDataModel;
+List<AddServiceDataModel> addServiceDataModel;
 AddServiceLoaded({required this.addServiceDataModel});
   @override
   List<Object?> get props => [addServiceDataModel];
