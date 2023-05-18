@@ -79,23 +79,23 @@ class _BuilAlerDialogState extends State<BuilAlerDialog> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               listTitleChoosePiture('Pick from Gallery', Icons.image, () async{
+                                Navigator.pop(context);
                                 final pickerFile = await ImagePicker().pickImage(source: ImageSource.gallery);
                                 imageName = pickerFile!.path.split('/').last;
                                 setState(() {
                                   image = pickerFile;
                                 });
-                                Navigator.pop(context);
                                 // image = takePhoto(ImageSource.gallery);
                                 // widget.avatarRsponsitory.getAvatar(context, ImageSource.gallery);
                               }),
                               Divider(),
                               listTitleChoosePiture('Pick from Camera', Icons.camera, () async{
+                                Navigator.pop(context);
                                 final pickerFile = await ImagePicker().pickImage(source: ImageSource.camera);
                                 imageName = pickerFile!.path.split('/').last;
                                 setState(() {
                                   image = pickerFile;
                                 });
-                                Navigator.pop(context);
                                // image = takePhoto(ImageSource.camera);
                                 // widget.avatarRsponsitory.getAvatar(context, ImageSource.camera);
                               }),
@@ -126,9 +126,9 @@ class _BuilAlerDialogState extends State<BuilAlerDialog> {
               return Center(child: CircularProgressIndicator(),);
             }
             return TextButton(
-              onPressed: (){
+              onPressed: () async{
                 if(_key.currentState!.validate()){
-                  widget.addServiceCubit.addServiceIcon(context, widget.nameService.text, widget.linkOn.text, widget.linkOff.text, widget.type, image);
+                  await widget.addServiceCubit.addServiceIcon(context, widget.nameService.text, widget.linkOn.text, widget.linkOff.text, widget.type, image);
                   Navigator.pushNamed(context, widget.routename);
                 }
               },

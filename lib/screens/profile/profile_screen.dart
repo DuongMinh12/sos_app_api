@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:warning_app/constants/add_all.dart';
 import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/models/models.dart';
+import 'package:warning_app/screens/screens.dart';
 import '../../cubit/account/customer_profile/user_pro5_cubit.dart';
 import 'components/body_pro5_user.dart';
 
@@ -44,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            ZoomDrawer.of(context)!.open();
+            Navigator.pushNamed(context, DrawerMenu.routeName);
           },
           icon: Icon(
             Icons.menu,
@@ -83,8 +84,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     controllerEmail: widget.email,
                     controllerPhone: widget.phone,
                     // phoneNumer: (state.user.phoneNumber!=null)? '${state.user.phoneNumber.hashCode}' : 'xxx-xxx-xxxx',
-                    updateButton: () {
-                      userPro5Cubit.updateUserPro5(context, widget.name.text, widget.email.text, widget.phone.text);
+                    updateButton: () async{
+                      await userPro5Cubit.updateUserPro5(context, widget.name.text, widget.email.text, widget.phone.text);
+                      Navigator.pushNamed(context, ProfilePage.routeName);
                     },
                     updateAvatarGallery: () {
                       userPro5Cubit.updateAvatar(context, ImageSource.gallery);

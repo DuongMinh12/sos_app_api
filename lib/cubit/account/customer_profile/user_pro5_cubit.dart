@@ -47,7 +47,6 @@ class UserPro5Cubit extends Cubit<UserPro5State> {
     try{
       if(res!=null&& res.data!=null && res.data['statusCode'] == 200){
         // Navigator.pushNamed(context, ProfilePage.routeName);
-        Navigator.pushNamed(context, DrawerMenu.routeName);
         Utils.toassMessage(res.data['message']);
         // Navigator.pop(context);
       }

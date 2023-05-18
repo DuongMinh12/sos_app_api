@@ -48,7 +48,14 @@ class _BodyHomePageState extends State<BodyHomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                print('notices');
+               showDialog(context: context, builder: (context){
+                 return AlertDialog(
+                   content: Text('Chưa xử lý, vui lòng đợi lần sau.'),
+                   actions: [
+                     TextButton(onPressed: (){Navigator.pop(context);}, child: Text('OK')),
+                   ],
+                 );
+               });
                 //Navigator.pushNamed(context, ProfilePage.routeName);
               },
               icon: Icon(

@@ -52,7 +52,7 @@ class _BuildAlerdialogChangeStateState extends State<BuildAlerdialogChangeState>
                 hintText: 'Nhập otp.',
                 hintStyle: TextStyle(color: Colors.grey.shade400),
                 suffixIconConstraints: BoxConstraints(
-                  maxWidth: 85,
+                  maxWidth: 90,
                 ),
                 suffixIcon: IntrinsicHeight(
                   child: Row(

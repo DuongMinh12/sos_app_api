@@ -11,3 +11,4 @@ export 'container_icon_widget.dart';
 export 'buildDialog.dart';
 export 'aler_change_state.dart';
 export 'BuildContainerService.dart';
+export 'aler_dialog_update.dart';

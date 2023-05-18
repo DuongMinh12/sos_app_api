@@ -5,6 +5,7 @@ import 'package:warning_app/cubit/account/login/login_cubit.dart';
 import 'package:warning_app/cubit/account/register/register_cubit.dart';
 import 'package:warning_app/cubit/service/add_service/add_service_cubit.dart';
 import 'package:warning_app/cubit/service/list_service/list_service_cubit.dart';
+import 'package:warning_app/cubit/service/update_service/update_service_cubit.dart';
 
 import 'list_bank/list_bank_cubit.dart';
 
@@ -25,6 +26,7 @@ class WrapProvider extends StatelessWidget {
         BlocProvider<RegisterCubit>(create: (BuildContext context) => RegisterCubit()),
         BlocProvider<AddServiceCubit>(create: (BuildContext context) => AddServiceCubit()),
         BlocProvider<ListServiceCubit>(create: (BuildContext context) => ListServiceCubit()),
+        BlocProvider<UpdateServiceCubit>(create: (BuildContext context) => UpdateServiceCubit()),
       ],
       child: child,
 
