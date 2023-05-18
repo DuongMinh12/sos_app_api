@@ -91,7 +91,9 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
                               linkOff: widget.linkOff,
                               linkOn: widget.linkOn,
                               textNameService: widget.textNameService,
-                              idService: state.listService[indext].id.toString());
+                              idService: state.listService[indext].id.toString(),
+                                stateString: state.listService[indext].state.hashCode,
+                              );
                             });
                       },
                       child: Container(

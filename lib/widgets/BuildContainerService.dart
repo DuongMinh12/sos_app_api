@@ -15,6 +15,7 @@ class buildContainerService extends StatefulWidget {
     required this.linkOn,
     required this.linkOff,
     required this.idService,
+    required this.stateString,
   }) : super(key: key);
 
   @override
@@ -27,6 +28,7 @@ class buildContainerService extends StatefulWidget {
   String rouname;
   UpdateServiceResponsitory updateServiceResponsitory = UpdateServiceResponsitory();
   String idService;
+  int stateString;
 }
 
 class _buildContainerServiceState extends State<buildContainerService> {
@@ -37,7 +39,8 @@ class _buildContainerServiceState extends State<buildContainerService> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          listTitleChoosePiture("Đóng/mở service.", Icons.change_circle_outlined, () {
+          listTitleChoosePiture(widget.stateString == 0? "Mở service" : "Đóng service", Icons.change_circle_outlined, () {
+            print(widget.stateString);
             Navigator.pop(context);
             showDialog(
                 context: context,
