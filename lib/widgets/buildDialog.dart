@@ -32,6 +32,7 @@ class BuilAlerDialog extends StatefulWidget {
 
 class _BuilAlerDialogState extends State<BuilAlerDialog> {
   var image;
+  var imageName;
   @override
   void initState() {
     super.initState();
@@ -51,6 +52,7 @@ class _BuilAlerDialogState extends State<BuilAlerDialog> {
         child: Form(
           key: _key,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisSize: MainAxisSize.min,
             // crossAxisAlignment: CrossAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,6 +80,7 @@ class _BuilAlerDialogState extends State<BuilAlerDialog> {
                             children: [
                               listTitleChoosePiture('Pick from Gallery', Icons.image, () async{
                                 final pickerFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                imageName = pickerFile!.path.split('/').last;
                                 setState(() {
                                   image = pickerFile;
                                 });
@@ -88,6 +91,7 @@ class _BuilAlerDialogState extends State<BuilAlerDialog> {
                               Divider(),
                               listTitleChoosePiture('Pick from Camera', Icons.camera, () async{
                                 final pickerFile = await ImagePicker().pickImage(source: ImageSource.camera);
+                                imageName = pickerFile!.path.split('/').last;
                                 setState(() {
                                   image = pickerFile;
                                 });
@@ -103,6 +107,7 @@ class _BuilAlerDialogState extends State<BuilAlerDialog> {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: kPrimaryColor
                   ),),
+                subtitle: Text(imageName!=null ? imageName: '', style: TextStyle(color: kPrimaryColor),),
               )
             ],
           ),

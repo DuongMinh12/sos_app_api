@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/models/add_service_data_model.dart';
-import 'package:warning_app/repositories/add_service_responsitory.dart';
+import 'package:warning_app/repositories/service/add_service_responsitory.dart';
 import 'package:warning_app/screens/recharge/rechargerScreen.dart';
 
 part 'add_service_state.dart';

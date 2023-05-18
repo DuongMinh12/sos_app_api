@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:warning_app/constants/utils.dart';
 
-import '../app_state/app_state.dart';
-import '../constants/add_all.dart';
-import '../screens/recharge/rechargerScreen.dart';
+import '../../app_state/app_state.dart';
+import '../../constants/add_all.dart';
+import '../../screens/recharge/rechargerScreen.dart';
 
 class DeleteServiceResponsitory{
   var dio = Dio();

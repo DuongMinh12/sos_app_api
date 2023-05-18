@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../app_state/app_state.dart';
 import '../cubit/service/list_service/list_service_cubit.dart';
-import '../repositories/change_state_service_responsitory.dart';
-import '../repositories/otp_Cstate_responsitory.dart';
+import '../repositories/service/change_state_service_responsitory.dart';
+import '../repositories/service/otp_Cstate_responsitory.dart';
 
 class BuildAlerdialogChangeState extends StatefulWidget {
-  BuildAlerdialogChangeState({Key? key, required this.serviceName}) : super(key: key);
+  BuildAlerdialogChangeState({Key? key, required this.serviceName, required this.routename}) : super(key: key);
 
   @override
   State<BuildAlerdialogChangeState> createState() => _BuildAlerdialogChangeStateState();
@@ -16,6 +16,7 @@ class BuildAlerdialogChangeState extends StatefulWidget {
   StateModel stateModel = StateModel();
   var idService = AppState.instance.settingBox.read(SettingType.idService.toString());
   String serviceName;
+  String routename;
 }
 
 class _BuildAlerdialogChangeStateState extends State<BuildAlerdialogChangeState> {
@@ -87,7 +88,7 @@ class _BuildAlerdialogChangeStateState extends State<BuildAlerdialogChangeState>
         ElevatedButton(
             onPressed: () async {
               await widget.changeStateResponsitory.putChangeState(widget.idService, widget.otp.text);
-              Navigator.pop(context);
+              Navigator.pushNamed(context, widget.routename);
             }
             // changeStateResponsitory.putChangeState(inService, otp.text);
             // widget.listServiceCubit.changeStateService(id, otp);

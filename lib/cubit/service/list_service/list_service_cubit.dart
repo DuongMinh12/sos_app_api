@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:warning_app/constants/utils.dart';
 import 'package:warning_app/models/list_service_model.dart';
-import 'package:warning_app/repositories/change_state_service_responsitory.dart';
-import 'package:warning_app/repositories/list_service_responsitory.dart';
+import 'package:warning_app/repositories/service/change_state_service_responsitory.dart';
+import 'package:warning_app/repositories/service/list_service_responsitory.dart';
 
 part 'list_service_state.dart';
 

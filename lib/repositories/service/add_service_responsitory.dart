@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 import 'package:dio/dio.dart';
-import '../constants/local.dart';
+import '../../constants/local.dart';
 
 class AddServiceResponsitory{
 

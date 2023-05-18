@@ -34,7 +34,7 @@ class UpdateAvatarRsponsitory{
     try{
       // dio.options.headers['Authorization']='Bearer $token';
       // dio.options.headers['content-type']='multipart/form-data';
-      var response = await dio.put('http://192.168.0.191:3000/api/user/update-avatar', data: dataform,
+      var response = await dio.put(urlUpdateUserAvatar, data: dataform,
           options: Options(headers: {
         "Authorization": 'Bearer $token',
        'content-type': 'multipart/form-data'
