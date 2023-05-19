@@ -39,7 +39,7 @@ class _buildContainerServiceState extends State<buildContainerService> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          listTitleChoosePiture(widget.stateString == 0? "Mở service" : "Đóng service", Icons.change_circle_outlined, () {
+          listTitleChoosePiture(widget.stateString == 0? "Đóng service" : "Mở service", Icons.change_circle_outlined, () {
             print(widget.stateString);
             Navigator.pop(context);
             showDialog(

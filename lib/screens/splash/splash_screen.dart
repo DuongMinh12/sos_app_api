@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:warning_app/app_state/app_state.dart';
 import 'package:warning_app/constants/add_all.dart';
 import 'package:lottie/lottie.dart';
+import 'package:warning_app/repositories/check_token_responsitory.dart';
 import 'package:warning_app/screens/screens.dart';
 import 'package:warning_app/services/splash_services.dart';
 
 import '../home/components/drawer_menu_main_page.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key}) : super(key: key);
+  SplashPage({Key? key}) : super(key: key);
   static String routeName = 'splashPage';
   @override
   State<SplashPage> createState() => _SplashPageState();
+  CheckTokenResponsitory checkTokenResponsitory =CheckTokenResponsitory();
 }
 
 class _SplashPageState extends State<SplashPage> {
-
   ///log vào mượt hơn là gọi thẳng funtion
   // SplashService service = SplashService();
   // @override
@@ -29,6 +30,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    widget.checkTokenResponsitory.checkToken();
     Future.delayed(Duration(seconds: 4), ()=> Navigator.pushNamed(context,AppState.instance.settingBox.read(SettingType.accessToken.toString())!=null? DrawerMenu.routeName: LogInPage.routeName));
   }
 

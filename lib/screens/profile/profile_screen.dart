@@ -46,9 +46,10 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: IconButton(
           onPressed: () {
             Navigator.pushNamed(context, DrawerMenu.routeName);
+            // ZoomDrawer.of(context)!.open();
           },
           icon: Icon(
-            Icons.menu,
+            Icons.arrow_back_ios_new,
             color: Colors.black,
           ),
         ),

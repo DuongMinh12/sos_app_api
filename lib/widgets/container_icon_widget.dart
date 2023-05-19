@@ -98,7 +98,7 @@ class _ContainerIconWidgetState extends State<ContainerIconWidget> {
                       },
                       child: Container(
                         padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(color: state.listService[indext].state == 1 ? kPrimaryColor.withAlpha(50) : Colors.red, borderRadius: BorderRadius.circular(8)),
+                        decoration: BoxDecoration(color: state.listService[indext].state == 0 ? kPrimaryColor.withAlpha(50) : Colors.red, borderRadius: BorderRadius.circular(8)),
                         child: Column(
                           children: [
                             Expanded(
